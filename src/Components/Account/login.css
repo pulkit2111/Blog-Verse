@@ -1,0 +1,92 @@
+
+.loginThrough{
+    background: none;
+    border: 1px solid rgb(209, 204, 204);
+    border-radius: 2px;
+    display: inline-block;
+    padding: 0.6vw 3vw;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+  
+  .loginThrough:hover{
+    background-color: lightgray;
+  }
+  
+  hr{
+    display: inline-block;
+    width: 44%;
+    opacity: 0.5;
+    height: 1px;
+    background-color: rgb(176, 176, 178);
+    border: none;
+  }
+  
+  .login-input{
+    border: none;
+    outline: none;
+    background-color: rgb(217, 213, 213);
+    border-radius: 0.2vw;
+    color: rgb(41, 40, 40);
+    display: block;
+    width: 100%;
+    height: 2vw;
+    padding: 1px;
+    padding-left: 5px;
+    font-weight: bold;
+    font-size: large;
+  }
+  
+  .login-input:focus {
+    background-color: #e0e0e0; /* Slightly darker grey background */
+    border: none;
+  }
+  
+  .login-field{
+    font-size: medium;
+    text-align: left;
+  }
+  
+  .login-container{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #BAB5AE;
+  }
+  
+  .login-image-container {
+    flex: 1;
+    width: 100%; /* Adjust as needed */
+    height: 100vh; /* Adjust as needed, e.g., 50vh for half screen height */
+    overflow: hidden; /* Hide the overflow */
+    position: relative;
+  }
+  
+  .login-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .login-left-container {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(239, 238, 237);
+  }
+  
+  .sign-in{
+    width: 100%;
+    background-color: black;
+    color: white;
+    border-radius: 2vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    height: 4vw;
+    border: none;
+    transition: opacity 0.5s ease, color 0.5s ease;
+  }
+  
+  .sign-in:hover{
+    opacity: 0.7;
+  }

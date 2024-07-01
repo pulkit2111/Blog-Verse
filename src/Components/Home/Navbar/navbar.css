@@ -1,0 +1,78 @@
+.navBody{
+    position: relative;
+    background-attachment: fixed;
+    margin-bottom: 2vw;
+}
+
+.topColor{
+    height: 0.5vw;
+    background: linear-gradient(to right, #ffeb3b, #ff5722, #2196f3, #9c27b0);}
+
+.website-name{
+    float: left;
+    margin-left: 1vw;
+}
+
+.website-name button{
+    border: none;
+    background-color: transparent;
+    font-style: italic;
+    font-size: 2vw;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.categories{
+    flex-grow: 1;
+    float: left;
+    position: relative;
+    left: 5vw;
+    top: 1vw;
+}
+
+
+.categories ul {
+    list-style-type: none;
+    display: flex;
+    gap: 1vw;
+    padding: 0;
+    margin: 0;
+}
+
+.categories button{
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 1vw;
+}
+
+.categories button:hover{
+    /* background-color: antiquewhite; */
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.author{
+    border-radius: 5px;
+    padding: 5px 9px;
+    font-stretch: expanded;
+    box-shadow: 1px 1px lightgray;
+}
+
+.search{
+    float: right;
+    position: relative;
+    right: 2vw;
+}
+
+.search-button{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    right: 8vw;
+}
+
+.search-button img{
+    width: 2vw;
+}
