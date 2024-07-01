@@ -4,13 +4,13 @@ import App from "./Components/App";
 import firebase from 'firebase/compat/app';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCoObvFFcDxtcB9vdM3DTwd0zoNwV3DhuA",
-  authDomain: "blog-photos-9c48e.firebaseapp.com",
-  projectId: "blog-photos-9c48e",
-  storageBucket: "blog-photos-9c48e.appspot.com",
-  messagingSenderId: "553258381345",
-  appId: "1:553258381345:web:d9cf25fdd544b77d6a3360",
-  measurementId: "G-FD7YQJYSGR"
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket:process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 
 firebase.initializeApp(firebaseConfig);
