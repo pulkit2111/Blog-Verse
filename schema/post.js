@@ -2,19 +2,32 @@ import mongoose from "mongoose";
 
 const postSchema=mongoose.Schema({
     title:{
-        type:String
+        type:String,
+        required:true,
+        unique: true
     },
     description:{
-        type:String
+        type:String,
+        required:true
     },
     picture:{
         type:String
     },
     email:{
-        type:String
+        type:String,
+        required:true
+    },
+    name:{
+        type: String,
+        required: true
     },
     category:{
-        type:String
+        type:String,
+        required:true
+    },
+    tags:{
+        type:Array,
+        required: true
     },
     createdDate:{
         type:String

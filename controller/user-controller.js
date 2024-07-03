@@ -1,4 +1,6 @@
 import User from '../schema/user.js';
+import Profile from '../schema/profile.js';
+import Post from '../schema/post.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -12,6 +14,7 @@ export const signupUser = async (req, res) => {
     const name = req.body.name;
     const phone = req.body.phone;
     const email= req.body.email;
+    const picture=req.body.picture;
     const password=hashedPassword;
 
     // Validate required fields
@@ -35,12 +38,13 @@ export const signupUser = async (req, res) => {
         }
 
         // Create a new user
-        const newUser = new User({ name, phone, email, password });
+        const newUser = new User({ name, phone, email, password,picture });
         await newUser.save();
-
+        const newProfile = new Profile({ name, phone, email ,picture });
+        await newProfile.save();
         // Send a success response
         console.log('User created successfully');
-        res.status(201).json({ message: 'User created successfully' });
+        res.status(200).json({ message: 'User created successfully' });
     } catch (error) {
         console.error('Error creating user:', error);
 
@@ -72,12 +76,35 @@ export const loginUser = async(req,res) =>{
             await newToken.save();
 
             console.log('Yes you are a user.');
-            return res.status(200).json({accessToken: accessToken, refreshToken:refreshToken, name:user.name, email:user.email});
+            return res.status(200).json({accessToken: accessToken, refreshToken:refreshToken, name:user.name, email:user.email, picture:user.picture});
         }
         else{
             return res.status(400).json({msg: 'Password does not match!'});
         }
     }catch(error){
         return res.status(500).json({msg: 'Error while login in user'});
+    }
+}
+
+export const showProfile=async(req,res)=>{
+    try{
+        const { email } = req.params;
+        console.log('email:', email);
+        const user = await Profile.findOne({ email });
+        console.log('user: ',user);
+        return res.status(200).json(user);
+    }catch(error){
+        return res.status(400).json({msg: error});
+    }
+}
+
+export const showUserPosts=async(req,res)=>{
+    try{
+        const { email } = req.params;
+        console.log('email:', email);
+        let posts = await Post.find({ email:email });
+        return res.status(200).json(posts);
+    }catch(error){
+        return res.status(400).json({msg: error});
     }
 }
