@@ -3,7 +3,7 @@ import { createContext, useState } from "react"
 export const DataContext = createContext(null);
 
 const DataProvider = ({children}) =>{
-    const [account, setAccount] = useState({ email: '', name: ''});
+    const [account, setAccount] = useState({ email: '', name: '', picture: ''});
     return(
         <DataContext.Provider value={{
             account,

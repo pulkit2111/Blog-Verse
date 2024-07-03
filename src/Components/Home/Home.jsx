@@ -1,15 +1,17 @@
-import React from "react";
-
 import Navbar from "./Navbar/Navbar";
 import Banner from "./Banner/Banner";
-import Popular from "./Popular/Popular";
+import Control from "./Blogs/Control";
+import {Grid} from '@mui/material';
 
 const Home = () =>{
     return(
         <div>
             <Navbar isAuthor={false}/>
             <Banner />
-            <Popular />
+            <h1>Popular Blogs</h1>
+            <Grid container spacing={2}>
+                <Control />
+            </Grid>
         </div>
     );
 }

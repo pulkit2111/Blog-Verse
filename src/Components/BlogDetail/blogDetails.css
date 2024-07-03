@@ -1,0 +1,50 @@
+.blog{
+    width: 50%;
+    margin: auto;
+    margin-top: 10vw;
+    position: relative;
+    border: 1px solid lightgray;
+    padding: 1vw 2vw;
+    text-align: left;
+}
+
+.go-back{
+    display: inline-block;
+    margin-bottom: 3vw;
+}
+
+.category{
+    font-size: 0.8vw;
+    font-weight: 600;
+    background-color: #ccced8;
+    color: #384579;
+    opacity: 0.9;
+    border-radius: 5px;
+    padding: 0.5vw;
+}
+
+.by{
+    font-weight: bold;
+}
+
+.blog-img{
+    max-width: 100%;
+    max-height: 25vw;
+}
+
+.blog-img-icon-link{
+    position: absolute;
+    top: 10px;    
+    left: 10px;   
+    color: white;  
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%; 
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog h1{
+    font-size: 2vw;
+}

@@ -22,9 +22,14 @@
 }
 
 //API service call
-
+// (url: '/', method: 'POST/GET/PUT/DELETE', params:true/false, query:true/false)
 export const SERVICE_URLS={
     userSignup:{url:'/signup' ,method:'POST'},
     userLogin:{url: '/login', method:'POST'},
-    blogCreate:{url: '/createBlog', method:'POST'}
+    blogCreate:{url: '/createBlog', method:'POST'},
+    
+    getAllPosts:{url:'/getPosts', method:'GET',params:true},
+    getPostById: {url: '/postById', method:'GET', query:true},
+    getProfile:{url:'/profile', method:'GET',query:true},
+    getUserPosts: {url:'/userPosts', method:'GET', query:true}
 }

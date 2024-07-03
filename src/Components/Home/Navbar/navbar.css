@@ -1,12 +1,19 @@
 .navBody{
-    position: relative;
-    background-attachment: fixed;
+    top: 0;
+    position: fixed;
+    width: 100%;
     margin-bottom: 2vw;
+    background-color: white;
+    height: 12vh;
+    z-index: 10;
 }
 
 .topColor{
     height: 0.5vw;
-    background: linear-gradient(to right, #ffeb3b, #ff5722, #2196f3, #9c27b0);}
+    background: linear-gradient(to right, #ffeb3b, #ff5722, #2196f3, #9c27b0);
+    width: 100%;
+}
+    
 
 .website-name{
     float: left;

@@ -12,7 +12,7 @@
     background-color: lightgray;
   }
   
-  hr{
+  .login-hr{
     display: inline-block;
     width: 44%;
     opacity: 0.5;

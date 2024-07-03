@@ -6,6 +6,8 @@ import { useState } from "react";
 import Login from "./Account/Login";
 import Home from "./Home/Home";
 import Author from "./Author/Author.jsx";
+import BlogDetail from "./BlogDetail/BlogDetail.jsx";
+import Profile from "./Account/Profile.jsx";
 
 //for global data sharing between components
 import DataProvider from "../context/DataProvider";
@@ -19,7 +21,7 @@ const PrivateRoute = ({isAuthenticated, ...props}) =>{
 }
 
 function App(){
-    const [isAuthenticated, isUserAuthenticated] = useState(false);
+    const [isAuthenticated, isUserAuthenticated] = useState(true);
     return (
         <div> 
             <DataProvider>
@@ -36,6 +38,13 @@ function App(){
                             <Route path='/author' element={ <Author/>} />
                         </Route>   
 
+                        <Route path="/details/:id" element={<PrivateRoute isAuthenticated={isAuthenticated} />}> 
+                            <Route path="/details/:id" element={<BlogDetail />}/>
+                        </Route>
+
+                        <Route path="/profile" element={<PrivateRoute isAuthenticated={isAuthenticated} />}> 
+                            <Route path="/profile" element={<Profile />}/>
+                        </Route>
                     </Routes>
                 </BrowserRouter>
             </DataProvider>

@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config';
-import { getAccessToken } from '../utils/common-utils';
+import { getAccessToken, getType } from '../utils/common-utils';
 
 const API_URL = 'http://localhost:3001';
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 10000,// Increased timeout for robustness
-  headers: { 'Content-Type': 'application/json' },
+  headers: { 'Content-Type': 'application/json' }
 });
 
 const processResponse = (response) => {
@@ -27,14 +27,14 @@ const processError = (error) => {
       code: error.response.status
     };
   } else if (error.request) {
-    console.log('error in request!', error.toJSON());
+    console.log('error in request!');
     return {
       isError: true,
       msg: API_NOTIFICATION_MESSAGES.requestFailure,
       code: ''
     };
   } else {
-    console.log('error in network!', error.toJSON());
+    console.log('error in network!');
     return {
       isError: true,
       msg: API_NOTIFICATION_MESSAGES.networkError,
@@ -44,7 +44,22 @@ const processError = (error) => {
 };
 
 axiosInstance.interceptors.request.use(
-  (config) => config,
+  (config) => {
+    const token = getAccessToken();
+    if (token) {
+      if (!token.startsWith('Bearer ')) {
+        config.headers['authorization'] = `Bearer ${token}`;
+      } else {
+        config.headers['authorization'] = token;
+      }
+    }
+    if(config.TYPE.params){
+      config.params = config.TYPE.params;
+    }else if(config.TYPE.query){
+        config.url= config.url + '/' + config.TYPE.query;
+    }
+    return config;
+  },
   (error) => Promise.reject(error)
 );
 
@@ -62,9 +77,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
       url: value.url,
       data: body,
       responseType: value.responseType,
-      headers:{
-        Authorization: getAccessToken()
-      },
+      TYPE: getType(value,body),
       onUploadProgress: (progressEvent) => {
         if (showUploadProgress) {
           let percentageCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);

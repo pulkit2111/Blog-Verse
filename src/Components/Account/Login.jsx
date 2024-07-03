@@ -12,11 +12,16 @@ import LoginBG from "./Images/login-bg.jpg";
 
 //material ui
 import Checkbox from '@mui/material/Checkbox';
-import { Typography, styled } from "@mui/material";
+import { Typography, styled, Button } from "@mui/material";
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 //helper files
 import { API } from "../../service/api.js";
 import { DataContext } from "../../context/DataProvider.jsx";
+
+//firebase
+import firebase from "firebase/compat/app";
+import 'firebase/compat/storage';
 
 const Error=styled(Typography)`
     font-size:10px;
@@ -30,7 +35,8 @@ const signupInitialValues={
     name: '',
     phone: '',
     email: '',
-    password: ''
+    password: '',
+    picture: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png'
 }
 
 const loginInitialValues={
@@ -54,6 +60,26 @@ const Login=({isUserAuthenticated})=>{
     const onInputChange=(e)=>{
         setSignup({...signup, [e.target.name]: e.target.value}); //append new values 
     }
+
+    const handleProfile= async(event)=>{
+        const selectedFile=event.target.files[0]
+        if(selectedFile){
+            const storageRef= firebase.storage().ref();
+            const folder='Profile Pictures'
+            const fileRef=storageRef.child(`${folder}/${selectedFile.name}`);
+            try {
+                const snapshot = await fileRef.put(selectedFile);
+                const downloadURL = await snapshot.ref.getDownloadURL();
+                console.log(downloadURL);
+                setSignup(prevSignup => ({ ...prevSignup, picture: downloadURL }));
+            } catch (error) {
+                console.error("Error uploading file: ", error);
+            }
+        }
+        else{
+            console.log('no file selected!');
+        }
+    };
 
     const signupUser= async()=>{
         try{
@@ -85,11 +111,12 @@ const Login=({isUserAuthenticated})=>{
             if(response.isSuccess) 
             {
                 setError('');
-                console.log('Succesfully registered user.')
+                console.log('Succesfully logged in.')
 
                 sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
                 sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
-                setAccount({email: response.data.email, name:response.data.name});
+                setAccount({email: response.data.email, name:response.data.name, picture:response.data.picture});
+                console.log('Updated Account:', { email: response.data.email, name: response.data.name });
                 isUserAuthenticated(true);
                 navigate('/');
             }
@@ -165,6 +192,13 @@ const Login=({isUserAuthenticated})=>{
 
                 <div>
                     <form action="">
+                    <Button variant='outlined'>
+                        <label htmlFor="fileInput">
+                            Set Profile Picture
+                            {/* <AddAPhotoIcon /> */}
+                        </label>
+                    </Button>
+                    <input type="file" id='fileInput' style={{display:"none"}} onChange={handleProfile}/>
                     <h1 className="login-field">Name</h1>
                     <input type="text" className="login-input"  name="name" onChange={(event)=>onInputChange(event)}/>
                     <h1 className="login-field">Phone</h1>

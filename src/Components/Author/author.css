@@ -1,28 +1,30 @@
-form{
-    width: 60%;
-    margin:5vw auto;
+.author-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 10vw; /* Adjust as needed */
+    padding: 0 4vw;
+  }  
+
+.author-form{
+    width: 50%;
     border: 1px solid rgb(206, 205, 205);
     border-radius: 10px;
     color: rgb(46, 46, 46);
     box-shadow: 1px 1px gray;
 }
 
-form h2{
+.author-form h2{
     text-align: left;
     padding-left: 1vw;
     margin: 0;
     padding-top: 0.5vw;
 }
 
-hr{
-    width: 100%;
-    border: 0px solid rgb(183, 178, 178);
-    margin: 0;
-}
-
 .blog-image{
     height: 20vw;
     max-width: 80%;
+    max-height: 40%;
 }
 
 .title{
@@ -34,7 +36,7 @@ hr{
     font-size: 1.2vw;
 }
 
-textarea{
+.author-textarea{
     border: none;
     font-size: 1.2vw;
     color: #664d06;
@@ -50,7 +52,7 @@ textarea{
 }
 
 .extra{
-    width: 83%;
+    width: 84%;
     margin: auto;
     text-align: left;
     position: relative;
@@ -59,4 +61,9 @@ textarea{
 .category{
     display: inline-block;
     margin: 0 1vw 1vw 0;
+}
+
+.preview{
+    width: 495px;
+    height: 561px;
 }
