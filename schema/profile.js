@@ -22,12 +22,11 @@ const profileSchema=mongoose.Schema({
         unique: true
     },
     subscribers:{
-        type: Number
+        type: Array
     },
-    blogs:{
-        type: Number
+    subscriptions:{
+        type: Array
     }
-
 })
 
 const Profile=mongoose.model('profile',profileSchema);

@@ -89,9 +89,7 @@ export const loginUser = async(req,res) =>{
 export const showProfile=async(req,res)=>{
     try{
         const { email } = req.params;
-        console.log('email:', email);
         const user = await Profile.findOne({ email });
-        console.log('user: ',user);
         return res.status(200).json(user);
     }catch(error){
         return res.status(400).json({msg: error});
@@ -101,10 +99,78 @@ export const showProfile=async(req,res)=>{
 export const showUserPosts=async(req,res)=>{
     try{
         const { email } = req.params;
-        console.log('email:', email);
         let posts = await Post.find({ email:email });
         return res.status(200).json(posts);
     }catch(error){
-        return res.status(400).json({msg: error});
+        return res.status(500).json({msg: error});
+    }
+}
+
+export const updateProfile=async(req,res)=>{
+    try{
+        const profile=await Profile.findById(req.params.id);
+        if(!profile)
+        {
+            return res.status(404).json({msg:'profile not found'});
+        }
+        await Profile.findByIdAndUpdate(req.params.id, {$set: req.body}) //$set is used to update the value of object, $addToSet is used to append object
+        return res.status(200).json({msg: 'post update successful'})
+    }catch(error){
+    return res.status(500).json({msg:error});
+    }
+}
+
+export const subscribe=async(req,res)=>{
+    try{
+        const userId=req.body[1];
+        const authorId=req.body[0];
+
+        if(userId===authorId)
+        {
+            return res.status(420).json({msg: 'You can not subscribe to yourself'})
+        }
+        const user= await Profile.findOne({email:userId});
+        const author=await Profile.findOne({email : authorId});
+
+        if (!user || !author) {
+            return res.status(404).json({ msg: 'User or Author not found' });
+        }
+        const isPresent = author.subscribers.length && author.subscribers.includes(userId);
+
+        if(isPresent) {
+
+            author.subscribers = author.subscribers.filter(subscriber => subscriber !== userId);
+            user.subscriptions = user.subscriptions.filter(subscription => subscription !== authorId);
+
+            await author.save();
+            await user.save();
+
+            console.log('Successfully unsubscribed');
+            return res.status(401).json({ msg: 'Unsubscribed successfully' });
+        }
+
+
+        author.subscribers.push(userId);
+        await author.save();
+
+        user.subscriptions.push(authorId);
+        await user.save();
+
+        console.log('Successfully subscribed')
+        return res.status(200).json({ msg: 'Subscribed successfully' });
+    }catch(error){
+        return res.status(500).json({msg:error.message});
+    }
+}
+
+export const showSubscribers=async(req,res)=>{
+    try{
+        const {email}=req.params;
+        const user=await Profile.findOne({email});
+        if(user){
+            return res.status(200).json(user.subscribers);
+        }
+    } catch(error){
+        return res.status(500).json({msg:error});
     }
 }

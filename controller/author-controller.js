@@ -37,4 +37,31 @@ export const showPostById=async(req,res)=>{
     }
 }
 
+export const updatePosts=async(req,res)=>{
+    try {
+        const email = req.body[0];
+        const newName = req.body[1];
+        console.log('newName: ',newName);
+        console.log('user email: ',email);
+        // Update the name field of all posts that match the email
+        const result = await Post.updateMany(
+            { email: email },
+            { $set: { name: newName } }
+        );
+
+        return res.status(200).json({ msg: 'Posts updated successfully', result });
+    } catch (error) {
+        return res.status(500).json({ msg: error.message });
+    }
+}
+
+export const deletePost=async(req,res)=>{
+    try{
+        const post = await Post.findByIdAndDelete(req.params.id);
+        return res.status(200).json({msg:'post deleted successfully'});
+    }catch(error){
+        return res.status(500).json({msg: error.message});
+    }
+}
+
 export default newBlog;
