@@ -156,7 +156,7 @@ const Author=()=>{
 
                 <div className='preview'>
                     <h1>Preview</h1>
-                    <Post post={post} />
+                    <Post post={post} isAuthor={true}/>
                 </div>
             </div>
     </div>

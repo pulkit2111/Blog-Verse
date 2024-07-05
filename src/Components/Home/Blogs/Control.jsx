@@ -28,7 +28,7 @@ const Control=()=>{
                 posts && posts.length>0 ? posts.map(post =>{
                     return (
                         <Grid item lg={4} sm={6} xs={12}>
-                            <Post post={post} />
+                            <Post post={post} isAuthor={false}/>
                         </Grid>
                     )
                 })

@@ -14,7 +14,7 @@ const processResponse = (response) => {
   if (response?.status === 200) {
     return { isSuccess: true, data: response.data };
   } else {
-    return { isFailure: true, status: response?.status, msg: response.msg, code: response?.code };
+    return { status: response?.status, msg: response.msg, code: response?.code };
   }
 };
 
@@ -75,7 +75,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
     axiosInstance({
       method: value.method,
       url: value.url,
-      data: body,
+      data: value.method==='DELETE'?{}:body,
       responseType: value.responseType,
       TYPE: getType(value,body),
       onUploadProgress: (progressEvent) => {

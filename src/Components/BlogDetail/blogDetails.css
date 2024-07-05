@@ -2,6 +2,7 @@
     width: 50%;
     margin: auto;
     margin-top: 10vw;
+    margin-bottom: 5vw;
     position: relative;
     border: 1px solid lightgray;
     padding: 1vw 2vw;
@@ -23,8 +24,47 @@
     padding: 0.5vw;
 }
 
+.author-details{
+    position: relative;
+}
+
+.author-profile-pic-container{
+    width: 5vw;
+    height: 5vw;
+    margin: auto;
+    border-radius: 100%;
+    padding: 0.5vw;
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.author-profile-pic{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+}
+
+.blog-author-details{
+    display: inline-block;
+    margin-left: 1vw;
+    position: absolute;
+    top: 1vw;
+}
+
 .by{
     font-weight: bold;
+    font-size: 1.5vw;
+    margin: 0 0 1vw 0;
+}
+
+.blog-date{
+    font-size: 1vw;
+    margin:0;
 }
 
 .blog-img{

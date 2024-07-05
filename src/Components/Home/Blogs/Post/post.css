@@ -41,30 +41,46 @@
 .post-content{
     padding: 2%;
     text-align: left;
+    position: relative;
+}
+
+.post-edit{
+    position: relative;
+    text-align: center;
+    height: 2vw;
+}
+
+.post-author{
+    float: left;
+}
+
+.changePost{
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
 }
 
 .post-date{
-    align-self: right;
+    float: right;
 }
 
 .post-content h1{
     font-size: 1.5vw;
 }
 
+.post-name{
+    position: relative;
+}
+
 .detail-link{
     position: absolute;
-    top: 1vw;
-    right: 1vw;;
+    right: 0;
+    bottom: 0;
 }
 
 .post-content p{
     font-size: 0.8vw;
     display: inline-block;
-}
-
-.post-date{
-    float: right;
-    margin-right: 2%;
 }
 
 .tags p{

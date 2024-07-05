@@ -42,9 +42,18 @@ function App(){
                             <Route path="/details/:id" element={<BlogDetail />}/>
                         </Route>
 
-                        <Route path="/profile" element={<PrivateRoute isAuthenticated={isAuthenticated} />}> 
-                            <Route path="/profile" element={<Profile />}/>
+                        <Route path="/profile/details/:id" element={<PrivateRoute isAuthenticated={isAuthenticated} />}> 
+                            <Route path="/profile/details/:id" element={<BlogDetail />}/>
                         </Route>
+
+                        <Route path="/profile" element={<PrivateRoute isAuthenticated={isAuthenticated} />}> 
+                            <Route path="/profile" element={<Profile isMine={true} />}/>
+                        </Route>
+
+                        <Route path="/details/:id/profile" element={<PrivateRoute isAuthenticated={isAuthenticated}/>}>
+                            <Route path="/details/:id/profile" element={<Profile isMine={false} />}/>
+                        </Route>
+
                     </Routes>
                 </BrowserRouter>
             </DataProvider>

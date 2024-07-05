@@ -3,48 +3,125 @@ import Navbar from "../Home/Navbar/Navbar";
 import { DataContext } from "../../context/DataProvider";
 import './profile.css'
 import { API } from "../../service/api";
-import EditIcon from '@mui/icons-material/Edit';
-import { Link } from "react-router-dom";
 import { Button , Grid} from "@mui/material";
 import Post from "../Home/Blogs/Post/Post";
+import EditableField from "./EditableField";
+import {Circles} from "react-loader-spinner";
+import { useParams } from 'react-router-dom';
 
-const Profile=()=>{
+import firebase from "firebase/compat/app";
+import 'firebase/compat/storage';
+
+const Profile=({isMine})=>{
     const account=useContext(DataContext);
+    const {id}=useParams();
+    const [email,setEmail]=useState('');
+    const [profile,setProfile]=useState([]);
+    const [posts,setPosts]=useState([]);
+    const [loading,setLoading] = useState(false);
+    const [successMessage, setSuccessMessage]= useState("");
+
+    useEffect(() => {
+        const fetchData = async()=>{
+            if (id) {
+                try {
+                    let response = await API.getPostById(id);
+                    if (response && response.isSuccess) {
+                        const fetchedPost = response.data;
+                        setEmail(fetchedPost.email);
+                        console.log('post: ', fetchedPost);
+                    } else {
+                        console.log('no post with this id found');
+                    }
+                } catch (error) {
+                    console.error('Error fetching post: ', error);
+                }
+            }
+        };
+        fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[id])
+
     useEffect(() => {
         console.log('account: ', account);
       }, [account]);
 
-    const [profile,setProfile]=useState([]);
-    const [posts,setPosts]=useState([]);
-
     useEffect(()=>{
         const fetchProfile=async()=>{
-            console.log('email: ',account.account.email);
-            const response=await API.getProfile(account.account.email);
-            if(response.isSuccess)
-            {
-                setProfile(response.data);
-                console.log("profile: ",profile);
-            }else{
+            let apiResponse;
+            if (isMine) {
+                apiResponse = await API.getProfile(account.account.email);
+            } else {
+                apiResponse = await API.getProfile(email);
+            }
+
+            if (apiResponse && apiResponse.isSuccess) {
+                setProfile(apiResponse.data);
+                console.log("profile: ", apiResponse.data);
+            } else {
                 console.log('User not logged in!');
             }
+        };
+        if ((isMine && account.account.email) || (!isMine && email)) {
+            fetchProfile();
         }
-        fetchProfile();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[account.account.email]);
+    },[account.account.email,email,isMine]);
 
-    useEffect(()=>{
-        const fetchData= async()=>{
-            let response = await API.getUserPosts(account.account.email);
-            if(response.isSuccess)
-            {
+    useEffect(() => {
+        const fetchData = async () => {
+            let response;
+            if (isMine && account.account.email) {
+                response = await API.getUserPosts(account.account.email);
+            } else if (email) {
+                response = await API.getUserPosts(email);
+            }
+
+            if (response && response.isSuccess) {
                 setPosts(response.data);
-                console.log('posts: ',posts);
+                console.log('posts: ', posts);
+            }
+        };
+
+        if ((isMine && account.account.email) || (!isMine && email)) {
+            fetchData();
+        }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [account.account.email, email, isMine]);
+
+    const handleupdate = (field, value) => {
+        const updatedProfile = { ...profile, [field]: value };
+        setProfile(updatedProfile);
+    };
+
+    const handleSave=async()=>{
+        setLoading(true);
+        await API.updateProfile(profile);
+        await API.updatePosts([profile.email, profile.name]);
+        setLoading(false);
+        setSuccessMessage("Profile Updated Successfully.");
+        setTimeout(()=>setSuccessMessage(""),3000);
+    }
+
+    const handleImageUpload= async(event)=>{
+        const selectedFile=event.target.files[0];
+        if(selectedFile){
+            const storageRef= firebase.storage().ref();
+            const folder='Profile Pictures'
+            const fileRef=storageRef.child(`${folder}/${selectedFile.name}`);
+            try {
+                const snapshot = await fileRef.put(selectedFile);
+                const downloadURL = await snapshot.ref.getDownloadURL();
+                console.log(downloadURL);
+                handleupdate('picture', downloadURL);
+            } catch (error) {
+                console.error("Error uploading file: ", error);
             }
         }
-        fetchData();
-    },[account.account.email])
+        else{
+            console.log('no file selected!');
+        }
+    };
 
     return(
         <div className="profile-outer">
@@ -57,43 +134,112 @@ const Profile=()=>{
 
                 <div className="profile">
 
-                    <img  className="profilePic" src={profile.picture?profile.picture: "https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"} alt="profilePicture" />
-
-                    <div className="edit">
-                        <Link to={'/updateProfile'}>
-                            <Button variant="outlined" style={{textTransform:"none"}}>Edit Profile<EditIcon /></Button>
-                        </Link>
+                    <div className="profilePicContainer">
+                        <img className="profilePic" src={profile.picture?profile.picture: "https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"} alt="profilePicture" />
+                        {
+                            isMine===true?(
+                                <EditableField
+                                value={profile.picture ? profile.picture : "https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"}
+                                onSave={handleImageUpload}
+                                type="file"
+                                />
+                            ):(
+                                <></>
+                            )
+                        }
                     </div>
 
-                    <h1>{profile.name}</h1>
+                        {
+                            isMine===true?(
+                                <div className="edit">
+                                <Button variant="outlined" style={{textTransform:"none"}} onClick={()=>handleSave()}>Update Profile</Button>
+                            </div>
+                            ):(
+                                <></>
+                            )
+                        }
 
-                    <p>{profile.about}</p>
+
+                    {
+                        isMine===true?(
+                            <h1>
+                                <EditableField value={profile.name} onSave={(value) => handleupdate('name', value)} />
+                            </h1>
+                        ):(
+                            <h1>{profile.name}</h1>
+                        )
+                    }
+
+                    {
+                        isMine===true?(
+                            <p>
+                                <EditableField value={profile.about} onSave={(value)=>handleupdate('about',value)} />
+                            </p>
+                        ):(
+                            <p>{profile.about}</p>
+                        )
+                    }
 
                     <div className="subscribers">
                         <div>
-                            <h1>5</h1>
+                            <h1>{posts.length}</h1>
                             <p>BLOGS</p>
                         </div>
                         <div>
-                            <h1>218</h1>
+                            <h1>{ profile.subscribers && profile.subscribers.length}</h1>
                             <p>SUBSCRIBERS</p>
                         </div>
                     </div>
 
+                    {loading && (
+                        <div className="loader">
+                            <Circles
+                                ariaLabel="loading"
+                                color="#00BFFF"
+                                height={80}
+                                width={80}
+                            />
+                        </div>
+                     )}
+
+                    {successMessage && (
+                        <div className="successMessage">
+                            {successMessage}
+                        </div>
+                    )}
+
                     <div>
                         <h1 className="recentBlogs">Recent Blogs</h1>
-                        <Grid container spacing={1}>
                         {
-                            posts && posts.length>0 ? posts.map(post =>{
-                                return(
-                                <Grid item lg={4} sm={6} xs={12}>
-                                    <Post post={post} />
+                            isMine===true?(
+                                <Grid container spacing={1}>
+                                {
+                                    posts && posts.length>0 ? posts.map(post =>{
+                                        return(
+                                        <Grid item lg={4} sm={6} xs={12}>
+                                            <Post post={post} isAuthor={true}/>
+                                        </Grid>
+                                        )
+                                    })
+                                    : <div>No posts available</div>
+                                }
                                 </Grid>
-                                )
-                            })
-                            : <div>No posts available</div>
+
+                            ):(
+                                <Grid container spacing={1}>
+                                    {
+                                        posts && posts.length>0 ? posts.map(post =>{
+                                            return(
+                                            <Grid item lg={4} sm={6} xs={12}>
+                                                <Post post={post} isAuthor={false}/>
+                                            </Grid>
+                                            )
+                                        })
+                                        : <div>No posts available</div>
+                                    }
+                                </Grid>
+                            )
                         }
-                        </Grid>
                     </div>
 
                 </div>

@@ -12,16 +12,11 @@ import LoginBG from "./Images/login-bg.jpg";
 
 //material ui
 import Checkbox from '@mui/material/Checkbox';
-import { Typography, styled, Button } from "@mui/material";
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import { Typography, styled} from "@mui/material";
 
 //helper files
 import { API } from "../../service/api.js";
 import { DataContext } from "../../context/DataProvider.jsx";
-
-//firebase
-import firebase from "firebase/compat/app";
-import 'firebase/compat/storage';
 
 const Error=styled(Typography)`
     font-size:10px;
@@ -61,30 +56,10 @@ const Login=({isUserAuthenticated})=>{
         setSignup({...signup, [e.target.name]: e.target.value}); //append new values 
     }
 
-    const handleProfile= async(event)=>{
-        const selectedFile=event.target.files[0]
-        if(selectedFile){
-            const storageRef= firebase.storage().ref();
-            const folder='Profile Pictures'
-            const fileRef=storageRef.child(`${folder}/${selectedFile.name}`);
-            try {
-                const snapshot = await fileRef.put(selectedFile);
-                const downloadURL = await snapshot.ref.getDownloadURL();
-                console.log(downloadURL);
-                setSignup(prevSignup => ({ ...prevSignup, picture: downloadURL }));
-            } catch (error) {
-                console.error("Error uploading file: ", error);
-            }
-        }
-        else{
-            console.log('no file selected!');
-        }
-    };
-
     const signupUser= async()=>{
         try{
         const response = await API.userSignup(signup);
-        if(response.isSuccess) 
+        if(response && response.isSuccess) 
         {
             setError('');
             console.log('Succesfully registered user.')
@@ -192,13 +167,6 @@ const Login=({isUserAuthenticated})=>{
 
                 <div>
                     <form action="">
-                    <Button variant='outlined'>
-                        <label htmlFor="fileInput">
-                            Set Profile Picture
-                            {/* <AddAPhotoIcon /> */}
-                        </label>
-                    </Button>
-                    <input type="file" id='fileInput' style={{display:"none"}} onChange={handleProfile}/>
                     <h1 className="login-field">Name</h1>
                     <input type="text" className="login-input"  name="name" onChange={(event)=>onInputChange(event)}/>
                     <h1 className="login-field">Phone</h1>

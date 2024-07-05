@@ -31,5 +31,13 @@ export const SERVICE_URLS={
     getAllPosts:{url:'/getPosts', method:'GET',params:true},
     getPostById: {url: '/postById', method:'GET', query:true},
     getProfile:{url:'/profile', method:'GET',query:true},
-    getUserPosts: {url:'/userPosts', method:'GET', query:true}
+    getUserPosts: {url:'/userPosts', method:'GET', query:true},
+    getSubscribers:{url:'/getSubscribers', method:'GET', query:true},
+    getRelatedPosts:{url:'/getRelatedPosts', method:'GET', query:true},
+    
+    updateProfile:{url: '/updateProfile', method:'PUT', query:true},
+    updatePosts:{url: '/updatePosts', method:'PUT', query:true},
+    subscribe:{url: '/subscribe', method:'PUT', query:true},
+
+    deletePost:{url: '/deletePost', method:'DELETE', query:true}
 }
