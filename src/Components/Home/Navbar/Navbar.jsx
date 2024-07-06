@@ -7,7 +7,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
-
 const Navbar=(props)=>{
     const navigate = useNavigate();
     const location = useLocation();
@@ -20,6 +19,13 @@ const Navbar=(props)=>{
                 navigate(route);
             }
         };
+    }
+
+    const handleLogout=async()=>{
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('account');
+        navigate('/login');
     }
 
     return (
@@ -54,7 +60,7 @@ const Navbar=(props)=>{
                       </Button>
                       <Menu {...bindMenu(popupState)}>
                           <MenuItem onClick={handleClick('/profile')}>Profile</MenuItem>          
-                          <MenuItem onClick={handleClick('/login')}>Logout</MenuItem>          
+                          <MenuItem onClick={()=>{handleLogout()}}>Logout</MenuItem>          
                       </Menu>
                     </React.Fragment>
                     )}

@@ -27,7 +27,8 @@ export const SERVICE_URLS={
     userSignup:{url:'/signup' ,method:'POST'},
     userLogin:{url: '/login', method:'POST'},
     blogCreate:{url: '/createBlog', method:'POST'},
-    
+
+    googleLogin:{url:'/google',method:'GET'},
     getAllPosts:{url:'/getPosts', method:'GET',params:true},
     getPostById: {url: '/postById', method:'GET', query:true},
     getProfile:{url:'/profile', method:'GET',query:true},

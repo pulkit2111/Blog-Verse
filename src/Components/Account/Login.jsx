@@ -9,7 +9,7 @@ import Google from './Images/GoogleLogo.png';
 import Facebook from "./Images/fbLogo.png";
 import Apple from "./Images/appleLogo.png";
 import LoginBG from "./Images/login-bg.jpg";
-
+import Logo from './Images/Blog verse.png'
 //material ui
 import Checkbox from '@mui/material/Checkbox';
 import { Typography, styled} from "@mui/material";
@@ -85,12 +85,16 @@ const Login=({isUserAuthenticated})=>{
             const response = await API.userLogin(login);
             if(response.isSuccess) 
             {
+                const accessToken=response.data.accessToken;
+                const refreshToken=response.data.refreshToken;
+                
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
+                
                 setError('');
                 console.log('Succesfully logged in.')
 
-                sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
-                sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
-                setAccount({email: response.data.email, name:response.data.name, picture:response.data.picture});
+                setAccount({email: response.data.email, name:response.data.name});
                 console.log('Updated Account:', { email: response.data.email, name: response.data.name });
                 isUserAuthenticated(true);
                 navigate('/');
@@ -105,19 +109,25 @@ const Login=({isUserAuthenticated})=>{
             }
     }
 
+        const handleGoogle = () => {
+            window.open('http://localhost:3001/google', '_self');
+                };
+
     return(
         <div className="login-container">
         { account==='login'?
         //  login
             <div className="login-left-container" style={{padding: "0  10vw"}}>
                 <div>
-                    <h1>LOGO</h1>
+                    <div className='logo-container'>
+                        <img src={Logo} alt="logo" className='logo'/>
+                    </div>
                     <h1 style={{fontSize:"2vw"}}>Welcome Back!</h1>
                     <p>Please Enter Your Details</p>
                 </div>
 
                 <div style={{margin:"1vw 0 1vw 0"}}>
-                    <button className="loginThrough" style={{float:"left"}}><img src={Google} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
+                    <button className="loginThrough" style={{float:"left"}} onClick={()=>{handleGoogle()}}><img src={Google} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
                     <button className="loginThrough"><img src={Facebook} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
                     <button className="loginThrough" style={{float:"right"}}><img src={Apple} alt="google logo" style={{width: "1.5vw", float:"right"}} /></button>
                 </div>
@@ -148,14 +158,15 @@ const Login=({isUserAuthenticated})=>{
         // signup
             <div className="login-left-container" style={{padding: "0  10vw"}}>
                 <div>
-                    <h1>LOGO</h1>
-                    <h1 style={{fontSize:"2vw"}}>Welcome !</h1>
+                    <div className='logo-container'>
+                        <img src={Logo} alt="logo" className='logo'/>
+                    </div>                    <h1 style={{fontSize:"2vw"}}>Welcome !</h1>
                     <p>Please Enter Your Details</p>
                 </div>
 
                 <div style={{margin:"1vw 0 1vw 0"}}>
-                    <button className="loginThrough" style={{float:"left"}}><img src={Google} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
-                    <button className="loginThrough"><img src={Facebook} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
+                <button className="loginThrough" style={{float:"left"}} onClick={()=>{handleGoogle()}}><img src={Google} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
+                <button className="loginThrough"><img src={Facebook} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
                     <button className="loginThrough" style={{float:"right"}}><img src={Apple} alt="google logo" style={{width: "1.5vw", float:"right"}} /></button>
                 </div>
 

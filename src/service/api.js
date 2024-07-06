@@ -7,7 +7,8 @@ const API_URL = 'http://localhost:3001';
 const axiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 10000,// Increased timeout for robustness
-  headers: { 'Content-Type': 'application/json' }
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: true, // Enable sending cookies with requests
 });
 
 const processResponse = (response) => {
@@ -78,6 +79,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
       data: value.method==='DELETE'?{}:body,
       responseType: value.responseType,
       TYPE: getType(value,body),
+      withCredentials: true,
       onUploadProgress: (progressEvent) => {
         if (showUploadProgress) {
           let percentageCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);

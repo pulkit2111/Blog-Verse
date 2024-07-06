@@ -34,6 +34,9 @@ const Profile=({isMine})=>{
                         console.log('no post with this id found');
                     }
                 } catch (error) {
+                    if(error.code===403){
+                        setSuccessMessage('Please Login!');
+                    }
                     console.error('Error fetching post: ', error);
                 }
             }
@@ -123,14 +126,46 @@ const Profile=({isMine})=>{
         }
     };
 
+    const handleBGImageUpload= async(event)=>{
+        const selectedFile=event.target.files[0];
+        if(selectedFile){
+            const storageRef= firebase.storage().ref();
+            const folder='Cover Pictures'
+            const fileRef=storageRef.child(`${folder}/${selectedFile.name}`);
+            try {
+                const snapshot = await fileRef.put(selectedFile);
+                const downloadURL = await snapshot.ref.getDownloadURL();
+                console.log(downloadURL);
+                handleupdate('bgPicture', downloadURL);
+            } catch (error) {
+                console.error("Error uploading file: ", error);
+            }
+        }
+        else{
+            console.log('no file selected!');
+        }
+    };
+
     return(
         <div className="profile-outer">
             <Navbar isAuthor={false}/>
 
             <div className="profile-box">
-                <div style={{height:"10vw"}}>
-                    <img className="profile-box-img" src="https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826" alt="" />
+                <div className="profileBGPicContainer">
+                        <img className="profileBGPic" src={profile.bgPicture?profile.bgPicture: "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"} alt="profilePicture" />
+                        {
+                            isMine===true?(
+                                <EditableField
+                                value={profile.bgPicture ? profile.bgPicture : "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"}
+                                onSave={handleBGImageUpload}
+                                type="file"
+                                />
+                            ):(
+                                <></>
+                            )
+                        }
                 </div>
+
 
                 <div className="profile">
 

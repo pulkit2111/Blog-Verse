@@ -1,7 +1,11 @@
-export const getAccessToken = () =>{
-    console.log(sessionStorage.getItem('accessToken'));
-    return sessionStorage.getItem('accessToken');
-}
+import { useEffect, useContext} from "react";
+import { useLocation, useNavigate} from "react-router-dom";
+import { DataContext } from "../context/DataProvider";
+
+export const getAccessToken = () => {
+    const accessToken = localStorage.getItem('accessToken');
+    return accessToken;
+};
 
 export const getType=(value,body)=>{
     if(value.params){
@@ -15,3 +19,31 @@ export const getType=(value,body)=>{
     }
     return {};
 }
+
+const useQuery=()=>{
+    return new URLSearchParams(useLocation().search);
+}
+
+const GoogleCallback=()=>{
+    const query=useQuery();
+    const navigate = useNavigate();
+    const {setAccount}=useContext(DataContext);
+    useEffect(() => {
+        const accessToken = query.get('accessToken');
+        const refreshToken = query.get('refreshToken');
+        const email= query.get('email');
+        const name= query.get('name');
+        const picture= query.get('picture');
+        if (accessToken && refreshToken) {
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+            setAccount({email,name,picture});
+            // Redirect to the desired page
+            navigate('/');
+        }
+    }, [query, setAccount, navigate]);
+
+    return null;
+}
+
+export default GoogleCallback;

@@ -1,6 +1,7 @@
 import React from "react";
 import {BrowserRouter, Routes, Route, Navigate, Outlet} from 'react-router-dom';
 import { useState } from "react";
+import GoogleCallback from "../utils/common-utils.js";
 
 //components
 import Login from "./Account/Login";
@@ -53,6 +54,8 @@ function App(){
                         <Route path="/details/:id/profile" element={<PrivateRoute isAuthenticated={isAuthenticated}/>}>
                             <Route path="/details/:id/profile" element={<Profile isMine={false} />}/>
                         </Route>
+
+                        <Route path="/google-callback" element={<GoogleCallback />} />
 
                     </Routes>
                 </BrowserRouter>
