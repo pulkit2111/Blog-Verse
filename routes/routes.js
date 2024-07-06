@@ -1,15 +1,18 @@
 import express from 'express';
-import {signupUser, loginUser, showProfile, showUserPosts, updateProfile, subscribe, showSubscribers} from '../controller/user-controller.js';
+import {signupUser, loginUser,googleCallback,showProfile, showUserPosts, updateProfile, subscribe, showSubscribers} from '../controller/user-controller.js';
 import {newBlog, showPosts, showPostById, deletePost, updatePosts} from '../controller/author-controller.js';
 import { authenticateToken } from '../controller/jwt-controller.js';
 import { getRelatedPosts } from '../controller/relatedPost-controller.js';
+import passport from '../controller/passport-controller.js';
 
 const router=express.Router();
 
 router.post('/signup',signupUser);
-router.post('/login', loginUser);
+router.post('/login',passport.authenticate('local'), loginUser);
 router.post('/createBlog', authenticateToken,newBlog);
 
+router.get('/google', passport.authenticate('google', {scope: ['profile', 'email'] }));
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), googleCallback)
 router.get('/getPosts', authenticateToken,showPosts);
 router.get('/postById/:id',authenticateToken, showPostById);
 router.get('/profile/:email',authenticateToken, showProfile);

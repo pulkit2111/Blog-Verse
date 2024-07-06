@@ -11,15 +11,16 @@ const profileSchema=mongoose.Schema({
     picture:{
         type:String
     },
+    bgPicture:{
+        type: String
+    },
     email:{
         type:String,
         required:true,
         unique:true
     },
     phone:{
-        type: Number,
-        required: true,
-        unique: true
+        type: Number
     },
     subscribers:{
         type: Array

@@ -14,7 +14,6 @@ export const signupUser = async (req, res) => {
     const name = req.body.name;
     const phone = req.body.phone;
     const email= req.body.email;
-    const picture=req.body.picture;
     const password=hashedPassword;
 
     // Validate required fields
@@ -38,9 +37,9 @@ export const signupUser = async (req, res) => {
         }
 
         // Create a new user
-        const newUser = new User({ name, phone, email, password,picture });
+        const newUser = new User({ name, phone, email, password});
         await newUser.save();
-        const newProfile = new Profile({ name, phone, email ,picture });
+        const newProfile = new Profile({ name, phone, email});
         await newProfile.save();
         // Send a success response
         console.log('User created successfully');
@@ -60,30 +59,29 @@ export const signupUser = async (req, res) => {
     }
 };
 
-export const loginUser = async(req,res) =>{
-    let user=await User.findOne({email:req.body.email});
-    if(!user){
-        console.log('user doesnot exist!');
-        return res.status(400).json({msg: 'Email does not exist!'});
-    }
-    try{
-        let match = await bcrypt.compare(req.body.password, user.password);
-        if(match){
-            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_SECRET_KEY, {expiresIn: '15m'});
-            const refreshToken=jwt.sign(user.toJSON(), process.env.REFRESH_SECRET_KEY);
-        
-            const newToken = new Token({token: refreshToken});
-            await newToken.save();
 
-            console.log('Yes you are a user.');
-            return res.status(200).json({accessToken: accessToken, refreshToken:refreshToken, name:user.name, email:user.email, picture:user.picture});
-        }
-        else{
-            return res.status(400).json({msg: 'Password does not match!'});
-        }
-    }catch(error){
-        return res.status(500).json({msg: 'Error while login in user'});
-    }
+
+export const loginUser= async(req,res)=>{
+    const user=req.user;
+
+    const accessToken= jwt.sign(user.toJSON(), process.env.ACCESS_SECRET_KEY, {expiresIn: '15m'});
+    const refreshToken=jwt.sign(user.toJSON(), process.env.REFRESH_SECRET_KEY);
+
+    const newToken = new Token({ userId: user._id, token: refreshToken });
+    await newToken.save();
+
+    res.status(200).json({accessToken:accessToken, refreshToken:refreshToken, name:user.name, email:user.email});
+}
+
+export const googleCallback= async(req,res)=>{
+    const user=req.user;
+    const accessToken=jwt.sign( user.toJSON(), process.env.ACCESS_SECRET_KEY, {expiresIn:'15m'})
+    const refreshToken = jwt.sign( user.toJSON(), process.env.REFRESH_SECRET_KEY);
+
+    const newToken = new Token({ userId: user._id, token: refreshToken });
+    await newToken.save();
+    
+    res.redirect(`http://localhost:3000/google-callback?accessToken=${accessToken}&refreshToken=${refreshToken}&email=${user.email}&name=${user.name}&picture=${user.picture}`);
 }
 
 export const showProfile=async(req,res)=>{

@@ -6,18 +6,21 @@ const userSchema=mongoose.Schema({
         required:true
     },
     phone:{
-        type:Number,
-        required: true,
-        unique: true
+        type:Number
     },
     email:{
         type:String,
         required: true,
         unique: true
     },
+    picture:{
+        type: String
+    },
     password:{
-        type:String,
-        required:true
+        type:String
+    },
+    googleId:{
+        type:String
     }
 })
 
