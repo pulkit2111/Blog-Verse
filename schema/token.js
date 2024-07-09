@@ -12,7 +12,7 @@ const tokenSchema = mongoose.Schema({
     createdAt: { 
         type: Date,
         default: Date.now, 
-        expires: 36000 } //10hour expiration
+        expires: 360000 } //100hour expiration
 });
 
 const token = mongoose.model('token', tokenSchema);

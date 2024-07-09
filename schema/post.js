@@ -32,8 +32,14 @@ const postSchema=mongoose.Schema({
     createdDate:{
         type:String
     },
+    likes:{
+        type: Array
+    },
+    comments:{
+        type: Array
+    }
 
-},  {timestamps: true})
+})
 
 const Post=mongoose.model('post',postSchema);
 export default Post;

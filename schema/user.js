@@ -6,7 +6,8 @@ const userSchema=mongoose.Schema({
         required:true
     },
     phone:{
-        type:Number
+        type:Number,
+        required:true
     },
     email:{
         type:String,
@@ -17,7 +18,8 @@ const userSchema=mongoose.Schema({
         type: String
     },
     password:{
-        type:String
+        type:String,
+        required:true
     },
     googleId:{
         type:String

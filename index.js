@@ -1,3 +1,5 @@
+// import path from 'path';
+// import __dirname from 'path';
 import express from 'express';
 
 import session from 'express-session';
@@ -45,9 +47,9 @@ app.use(passport.session());
 
 app.use('/',Router);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+// });
 
 const PORT = 3001;
 
