@@ -21,9 +21,7 @@ const Control=()=>{
                     setPosts(response.data);
                 }
             }catch(error){
-                if(error.code===401){
-                    setSuccessMessage('Please Login to see blogs!');
-                }
+                setSuccessMessage('Server has not started yet!');
             }
         }
         fetchData();
@@ -34,7 +32,7 @@ const Control=()=>{
             {
                 posts && posts.length>0 ? posts.map(post =>{
                     return (
-                        <Grid item lg={4} sm={6} xs={12}>
+                        <Grid item lg={4} sm={6} xs={12} key={post._id}>
                             <Post post={post} isAuthor={false}/>
                         </Grid>
                     )

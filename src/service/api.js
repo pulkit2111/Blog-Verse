@@ -21,7 +21,7 @@ const processResponse = (response) => {
 
 const processError = (error) => {
   if (error.response) {
-    console.log('error in response!', error.toJSON());
+    console.log('error in response!', error.response.status);
     return {
       isError: true,
       msg: API_NOTIFICATION_MESSAGES.responsefailure,
@@ -49,9 +49,9 @@ axiosInstance.interceptors.request.use(
     const token = getAccessToken();
     if (token) {
       if (!token.startsWith('Bearer ')) {
-        config.headers['authorization'] = `Bearer ${token}`;
+        config.headers['Authorization'] = `Bearer ${token}`;
       } else {
-        config.headers['authorization'] = token;
+        config.headers['Authorization'] = token;
       }
     }
     if(config.TYPE.params){
@@ -66,7 +66,21 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => processResponse(response),
-  (error) => Promise.reject(processError(error))
+  async(error)=>{
+    const originalRequest=error.config;
+    if(error.response.status === 403 && !originalRequest._retry){
+      originalRequest._retry = true;
+      const refreshToken = localStorage.getItem('refreshToken');
+      const accessToken = await axios.post('http://localhost:3001/refresh-token', {refreshToken});
+      if(accessToken){
+        localStorage.setItem('accessToken', accessToken.data.newAccessToken);
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken.data.newAccessToken}`;
+        originalRequest.headers['Authorization'] = `Bearer ${accessToken.data.newAccessToken}`;
+        return axiosInstance(originalRequest);
+      }
+    }
+    return processError(error);  
+  }
 );
 
 const API = {};

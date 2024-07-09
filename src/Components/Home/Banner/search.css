@@ -1,0 +1,13 @@
+.MuiAutocomplete-inputRoot {
+  border-radius: 25px;
+  padding: 0;
+  height: 45px;
+}
+
+.MuiAutocomplete-input {
+  padding: 10px 12px;
+}
+
+.MuiInputAdornment-root {
+  margin-right: 8px;
+}

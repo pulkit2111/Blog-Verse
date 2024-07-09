@@ -8,6 +8,7 @@ import Post from "../Home/Blogs/Post/Post";
 import EditableField from "./EditableField";
 import {Circles} from "react-loader-spinner";
 import { useParams } from 'react-router-dom';
+import profileBg from '../../Images/profile.png';
 
 import firebase from "firebase/compat/app";
 import 'firebase/compat/storage';
@@ -30,14 +31,9 @@ const Profile=({isMine})=>{
                         const fetchedPost = response.data;
                         setEmail(fetchedPost.email);
                         console.log('post: ', fetchedPost);
-                    } else {
-                        console.log('no post with this id found');
                     }
                 } catch (error) {
-                    if(error.code===403){
-                        setSuccessMessage('Please Login!');
-                    }
-                    console.error('Error fetching post: ', error);
+                    setSuccessMessage('Please Login!');
                 }
             }
         };
@@ -52,18 +48,21 @@ const Profile=({isMine})=>{
     useEffect(()=>{
         const fetchProfile=async()=>{
             let apiResponse;
-            if (isMine) {
-                apiResponse = await API.getProfile(account.account.email);
-            } else {
-                apiResponse = await API.getProfile(email);
+            try{
+                if (isMine) {
+                    apiResponse = await API.getProfile(account.account.email);
+                } else {
+                    apiResponse = await API.getProfile(email);
+                }
+    
+                if (apiResponse && apiResponse.isSuccess) {
+                    setProfile(apiResponse.data);
+                    console.log("profile: ", apiResponse.data);
+                } 
+            }catch(error){
+                setSuccessMessage('Please Log in!');
             }
 
-            if (apiResponse && apiResponse.isSuccess) {
-                setProfile(apiResponse.data);
-                console.log("profile: ", apiResponse.data);
-            } else {
-                console.log('User not logged in!');
-            }
         };
         if ((isMine && account.account.email) || (!isMine && email)) {
             fetchProfile();
@@ -74,15 +73,18 @@ const Profile=({isMine})=>{
     useEffect(() => {
         const fetchData = async () => {
             let response;
-            if (isMine && account.account.email) {
-                response = await API.getUserPosts(account.account.email);
-            } else if (email) {
-                response = await API.getUserPosts(email);
-            }
-
-            if (response && response.isSuccess) {
-                setPosts(response.data);
-                console.log('posts: ', posts);
+            try{
+                if (isMine && account.account.email) {
+                    response = await API.getUserPosts(account.account.email);
+                } else if (email) {
+                    response = await API.getUserPosts(email);
+                }
+                if (response && response.isSuccess) {
+                    setPosts(response.data);
+                    console.log('posts: ', posts);
+                }
+            }catch(error){
+                setSuccessMessage('Please Login!');
             }
         };
 
@@ -106,39 +108,24 @@ const Profile=({isMine})=>{
         setTimeout(()=>setSuccessMessage(""),3000);
     }
 
-    const handleImageUpload= async(event)=>{
-        const selectedFile=event.target.files[0];
-        if(selectedFile){
-            const storageRef= firebase.storage().ref();
-            const folder='Profile Pictures'
-            const fileRef=storageRef.child(`${folder}/${selectedFile.name}`);
-            try {
-                const snapshot = await fileRef.put(selectedFile);
-                const downloadURL = await snapshot.ref.getDownloadURL();
-                console.log(downloadURL);
-                handleupdate('picture', downloadURL);
-            } catch (error) {
-                console.error("Error uploading file: ", error);
-            }
-        }
-        else{
-            console.log('no file selected!');
-        }
-    };
+    const handleBGImageUpload = async(file)=>{
+        await handleImageUpload(file, 'bgPicture');
+    }
 
-    const handleBGImageUpload= async(event)=>{
-        const selectedFile=event.target.files[0];
-        if(selectedFile){
+    const handleImageUpload= async(file, field)=>{
+        console.log("field: ", field);
+        if(file){
             const storageRef= firebase.storage().ref();
-            const folder='Cover Pictures'
-            const fileRef=storageRef.child(`${folder}/${selectedFile.name}`);
+            const folder=field==='picture'?'Profile Pictures' : 'Cover Pictures';
+            const fileRef=storageRef.child(`${folder}/${file.name}`);
             try {
-                const snapshot = await fileRef.put(selectedFile);
+                const snapshot = await fileRef.put(file);
                 const downloadURL = await snapshot.ref.getDownloadURL();
                 console.log(downloadURL);
-                handleupdate('bgPicture', downloadURL);
+                handleupdate(field, downloadURL);
             } catch (error) {
-                console.error("Error uploading file: ", error);
+                setSuccessMessage('Error uploading file!');
+                setTimeout(()=>setSuccessMessage(""),3000);
             }
         }
         else{
@@ -152,31 +139,33 @@ const Profile=({isMine})=>{
 
             <div className="profile-box">
                 <div className="profileBGPicContainer">
-                        <img className="profileBGPic" src={profile.bgPicture?profile.bgPicture: "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"} alt="profilePicture" />
-                        {
-                            isMine===true?(
-                                <EditableField
-                                value={profile.bgPicture ? profile.bgPicture : "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"}
-                                onSave={handleBGImageUpload}
-                                type="file"
-                                />
-                            ):(
-                                <></>
-                            )
-                        }
+                    <img className="profileBGPic" src={profile.bgPicture?profile.bgPicture: "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"} alt="profileBGPicture" />
+                    {
+                        isMine===true?(
+                            <EditableField
+                            value={profile.bgPicture ? profile.bgPicture : "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"}
+                            onSave={handleBGImageUpload}
+                            type="file"
+                            field="bgPicture"
+                            />
+                        ):(
+                            <></>
+                        )
+                    }
                 </div>
 
 
                 <div className="profile">
 
                     <div className="profilePicContainer">
-                        <img className="profilePic" src={profile.picture?profile.picture: "https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"} alt="profilePicture" />
+                        <img className="profilePic" src={profile.picture?profile.picture: profileBg} alt="profilePicture" />
                         {
                             isMine===true?(
                                 <EditableField
-                                value={profile.picture ? profile.picture : "https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"}
-                                onSave={handleImageUpload}
+                                value={profile.picture ? profile.picture : profileBg}
+                                onSave={handleImageUpload}                             
                                 type="file"
+                                field="picture"
                                 />
                             ):(
                                 <></>
@@ -197,7 +186,7 @@ const Profile=({isMine})=>{
 
                     {
                         isMine===true?(
-                            <h1>
+                            <h1 style={{cursor:"pointer"}}>
                                 <EditableField value={profile.name} onSave={(value) => handleupdate('name', value)} />
                             </h1>
                         ):(
@@ -205,15 +194,21 @@ const Profile=({isMine})=>{
                         )
                     }
 
-                    {
+                    <p style={{margin:"-1.5vw 0 2vw", color:"gray"}}>{profile.email}</p>
+
+                    <div className="about-profile">
+                        <p className="about">About: </p>
+                        {
                         isMine===true?(
-                            <p>
+                            <p style={{cursor:"pointer", width:"100%"}} >
                                 <EditableField value={profile.about} onSave={(value)=>handleupdate('about',value)} />
                             </p>
                         ):(
-                            <p>{profile.about}</p>
+                            <p >{profile.about}</p>
                         )
-                    }
+                        }
+                    </div>
+                    
 
                     <div className="subscribers">
                         <div>
@@ -251,7 +246,7 @@ const Profile=({isMine})=>{
                                 {
                                     posts && posts.length>0 ? posts.map(post =>{
                                         return(
-                                        <Grid item lg={4} sm={6} xs={12}>
+                                        <Grid item lg={4} sm={6} xs={12} key={post._id}>
                                             <Post post={post} isAuthor={true}/>
                                         </Grid>
                                         )

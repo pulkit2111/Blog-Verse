@@ -1,7 +1,7 @@
 import './post.css';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
-import { Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {API} from '../../../../service/api.js';
 import { useState } from 'react';
@@ -16,6 +16,13 @@ const Post=({post, isAuthor})=>{
         {
             setSuccessMessage('Post Deleted Successfully');
             setTimeout(()=>setSuccessMessage(''),3000);
+        }
+    }
+
+    const navigate=useNavigate();
+    const handleClick=(query)=>{
+        return ()=>{
+            navigate(`/details/${query}`);
         }
     }
     return(
@@ -44,9 +51,7 @@ const Post=({post, isAuthor})=>{
 
                 <div className='post-name'>
                     <h1>{post.title}</h1>
-                    <Link to={`details/${post._id}`}>
-                        <ArrowOutwardIcon className='detail-link'/>
-                    </Link>
+                        <ArrowOutwardIcon className='detail-link' onClick={handleClick(post._id)}/>
                 </div>
 
                 <p>{post.description.length<=100?post.description:post.description.slice(0,100)+'...'}</p>

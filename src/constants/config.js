@@ -27,6 +27,7 @@ export const SERVICE_URLS={
     userSignup:{url:'/signup' ,method:'POST'},
     userLogin:{url: '/login', method:'POST'},
     blogCreate:{url: '/createBlog', method:'POST'},
+    logoutUser:{url: '/logout', method:'POST'},
 
     googleLogin:{url:'/google',method:'GET'},
     getAllPosts:{url:'/getPosts', method:'GET',params:true},
@@ -39,6 +40,8 @@ export const SERVICE_URLS={
     updateProfile:{url: '/updateProfile', method:'PUT', query:true},
     updatePosts:{url: '/updatePosts', method:'PUT', query:true},
     subscribe:{url: '/subscribe', method:'PUT', query:true},
+    like:{url: '/like', method: 'PUT', query:true},
+    putComment:{url:'/putComment', method:'PUT', query: true},
 
     deletePost:{url: '/deletePost', method:'DELETE', query:true}
 }

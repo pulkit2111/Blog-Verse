@@ -1,8 +1,13 @@
+.profile-outer{
+    background-color: rgb(245, 245, 245);
+    padding-top: 10vw;
+}
+
 .profile-box{
     width: 60%;
     margin: auto;
-    margin-top: 10vw;
     position: relative;
+    background-color: white;
 }
 
 .profile-box-img{
@@ -58,7 +63,7 @@
 }
 
 .editIcon{
-    color: black;
+    color: gray;
 }
 
 .edit{
@@ -98,8 +103,31 @@
     text-align: center;
 }
 
+.about-profile{
+    border: 1px solid gray;
+    width: 70%;
+    margin: 1vw auto 2vw;
+    border-radius: 20px;
+    padding: 0 1.5vw;
+    text-align: left;
+}
+
+
+.about{
+    float: left;
+    margin-right: 1vw;
+}
+
 .subscribers{
     text-align: center;
+}
+
+.subscribers h1{
+    color: rgb(80, 80, 80);
+}
+
+.subscribers p{
+    color: rgb(0, 0, 0);
 }
 
 .subscribers div{

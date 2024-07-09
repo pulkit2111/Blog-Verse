@@ -5,33 +5,25 @@ import {useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 //images
-import Google from './Images/GoogleLogo.png';
-import Facebook from "./Images/fbLogo.png";
-import Apple from "./Images/appleLogo.png";
-import LoginBG from "./Images/login-bg.jpg";
-import Logo from './Images/Blog verse.png'
+import Google from '../../Images/GoogleLogo.png';
+import Facebook from "../../Images/fbLogo.png";
+import Apple from "../../Images/appleLogo.png";
+import LoginBG from "../../Images/login-bg.jpg";
+import Logo from '../../Images/Blog verse.png'
 //material ui
 import Checkbox from '@mui/material/Checkbox';
-import { Typography, styled} from "@mui/material";
+import profileBg from '../../Images/profile.png';
 
 //helper files
 import { API } from "../../service/api.js";
 import { DataContext } from "../../context/DataProvider.jsx";
-
-const Error=styled(Typography)`
-    font-size:10px;
-    color:red;
-    line-height:0;
-    margin-top:10px;
-    font-weight:600;
-`
 
 const signupInitialValues={
     name: '',
     phone: '',
     email: '',
     password: '',
-    picture: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png'
+    picture: profileBg
 }
 
 const loginInitialValues={
@@ -42,8 +34,8 @@ const loginInitialValues={
 const Login=({isUserAuthenticated})=>{
     const [account, toggleAccount] = useState('login');
     const [signup, setSignup]=useState(signupInitialValues);
-    const [error, setError] = useState('');
     const [login, setLogin] = useState(loginInitialValues);
+    const [successMessage, setSuccessMessage]=useState('');
 
     const {setAccount} = useContext(DataContext);
     const navigate = useNavigate();
@@ -61,18 +53,27 @@ const Login=({isUserAuthenticated})=>{
         const response = await API.userSignup(signup);
         if(response && response.isSuccess) 
         {
-            setError('');
             console.log('Succesfully registered user.')
             setSignup(signupInitialValues);
             toggleAccount('login');
         }
-        else {
-            setError(response.msg || 'An unexpected error occured!');
-            console.log('Sign-up response error:', response.msg);
-          }
         } catch (err) {
-          setError(err.error || 'An unexpected error occured!');
-          console.log('Sign-up catch error:', JSON.stringify(err, null, 2));
+            if(err.code===400) {
+                setSuccessMessage('All fields are required!');
+                setTimeout(()=>(setSuccessMessage('')), 3000);
+            }
+            else if(err.code===409){
+                setSuccessMessage('User with this email already exists!');
+                setTimeout(()=>(setSuccessMessage('')), 3000);
+            }
+            else if(err.code === 410){
+                setSuccessMessage('User with this phone already exists!');
+                setTimeout(()=>(setSuccessMessage('')), 3000);
+            }
+            else{
+                setSuccessMessage('Failed to create user!');
+                setTimeout(()=>(setSuccessMessage('')), 3000);
+            }
         }
     };
 
@@ -85,28 +86,28 @@ const Login=({isUserAuthenticated})=>{
             const response = await API.userLogin(login);
             if(response.isSuccess) 
             {
+                
                 const accessToken=response.data.accessToken;
                 const refreshToken=response.data.refreshToken;
                 
                 localStorage.setItem('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken);
                 
-                setError('');
                 console.log('Succesfully logged in.')
 
                 setAccount({email: response.data.email, name:response.data.name});
-                console.log('Updated Account:', { email: response.data.email, name: response.data.name });
                 isUserAuthenticated(true);
                 navigate('/');
             }
-            else {
-                setError(response.msg || 'An unexpected error occured!');
-                console.log('Login response error:', response.msg);
-              }
-            } catch (err) {
-              setError(err.msg || 'An unexpected error occured!');
-              console.log('Error occured while logging in', JSON.stringify(err, null, 2));
+            else{
+                setSuccessMessage('Invalid email or password!');
+                setTimeout(()=>(setSuccessMessage('')), 3000);
             }
+            } 
+        catch (err) {
+            setSuccessMessage('Invalid email or password!');
+            setTimeout(()=>(setSuccessMessage('')), 3000);
+        }
     }
 
         const handleGoogle = () => {
@@ -192,14 +193,19 @@ const Login=({isUserAuthenticated})=>{
                         <Checkbox style={{float:"left"}}/>
                         <h1 style={{display:"inline-block", fontSize: "small", float:"left"}}>Remember Me</h1>
                     </div>
-                    {error && <Error>{error}</Error>}
                     <button className="sign-in" onClick={()=>signupUser()}>Sign Up</button>
 
                     <button className="sign-in" style={{backgroundColor:"green"}} onClick={()=>toggleSignup()}>Already Have An Account?</button>
                 </div>
+
             </div>
         }
 
+        {successMessage && (
+            <div className="successMessage">
+                {successMessage}
+            </div>
+        )}
         <div className="login-image-container">
             <img src={LoginBG} alt="" />
         </div>

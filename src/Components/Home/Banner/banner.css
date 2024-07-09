@@ -1,4 +1,48 @@
 .banner{
+    height: 20vw;
     padding-top: 5vw;
-    padding-bottom: 3vw;
+    padding-bottom: 5vw;
+    position: relative;
+    background-color: rgb(245, 245, 245);
+}
+
+.banner-heading{
+    font-weight: lighter;
+    font-size: 5vw;
+}
+
+.top-left{
+    position: absolute;
+    top: 3vw;
+    left: -2vw;
+}
+
+.bottom-left{
+    position: absolute;
+    bottom: 3vw;
+    left: -6vw;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.top-right{
+    position: absolute;
+    top: 3vw;
+    right: -2vw;
+}
+
+.bottom-right{
+    position: absolute;
+    bottom:3vw;
+    right: -2vw;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.banner-img{
+    margin: 1vw;
+    border-radius: 20%;
+    margin-right: 0;
 }

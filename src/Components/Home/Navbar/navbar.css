@@ -4,8 +4,9 @@
     width: 100%;
     margin-bottom: 2vw;
     background-color: white;
-    height: 12vh;
+    height: 10vh;
     z-index: 10;
+    box-shadow: 0 1px 3px 0 #939393;
 }
 
 .topColor{
@@ -13,11 +14,15 @@
     background: linear-gradient(to right, #ffeb3b, #ff5722, #2196f3, #9c27b0);
     width: 100%;
 }
-    
+
+.mainDiv{
+    padding-top: 1vw;
+    text-align: center;
+}
 
 .website-name{
-    float: left;
     margin-left: 1vw;
+    float: left;
 }
 
 .website-name button{
@@ -30,11 +35,7 @@
 }
 
 .categories{
-    flex-grow: 1;
-    float: left;
-    position: relative;
-    left: 5vw;
-    top: 1vw;
+    display: inline-block;
 }
 
 
@@ -49,35 +50,28 @@
 .categories button{
     border: none;
     background-color: transparent;
-    font-weight: bold;
     font-size: 1vw;
 }
 
 .categories button:hover{
-    /* background-color: antiquewhite; */
     cursor: pointer;
     transform: scale(1.05);
 }
 
 .author{
-    border-radius: 5px;
-    padding: 5px 9px;
-    font-stretch: expanded;
-    box-shadow: 1px 1px lightgray;
+    text-transform: none;
 }
 
 .search{
     float: right;
-    position: relative;
-    right: 2vw;
+    margin-right: 2vw;
 }
 
 .search-button{
     cursor: pointer;
     border: none;
     background-color: transparent;
-    position: absolute;
-    right: 8vw;
+    margin:0;
 }
 
 .search-button img{
