@@ -51,6 +51,11 @@
     font-weight: bold;
     font-size: large;
   }
+
+  .password-container{
+    display: flex;
+    align-items: center;
+  }
   
   .login-input:focus {
     background-color: #e0e0e0; /* Slightly darker grey background */

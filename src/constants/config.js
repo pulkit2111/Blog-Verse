@@ -28,6 +28,7 @@ export const SERVICE_URLS={
     userLogin:{url: '/login', method:'POST'},
     blogCreate:{url: '/createBlog', method:'POST'},
     logoutUser:{url: '/logout', method:'POST'},
+    sendNotif:{url: '/sendNotif', method: 'POST'},
 
     googleLogin:{url:'/google',method:'GET'},
     getAllPosts:{url:'/getPosts', method:'GET',params:true},
@@ -36,6 +37,7 @@ export const SERVICE_URLS={
     getUserPosts: {url:'/userPosts', method:'GET', query:true},
     getSubscribers:{url:'/getSubscribers', method:'GET', query:true},
     getRelatedPosts:{url:'/getRelatedPosts', method:'GET', query:true},
+    getNotifs:{url: '/getNotifs', method:'GET', query:true},
     
     updateProfile:{url: '/updateProfile', method:'PUT', query:true},
     updatePosts:{url: '/updatePosts', method:'PUT', query:true},
@@ -43,5 +45,6 @@ export const SERVICE_URLS={
     like:{url: '/like', method: 'PUT', query:true},
     putComment:{url:'/putComment', method:'PUT', query: true},
 
-    deletePost:{url: '/deletePost', method:'DELETE', query:true}
+    deletePost:{url: '/deletePost', method:'DELETE', query:true},
+    deleteNotifs: {url: '/deleteNotifs', method: 'DELETE', query: true}
 }

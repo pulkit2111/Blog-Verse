@@ -1,9 +1,8 @@
-import { useState , useEffect, useContext} from 'react';
+import { useState , useEffect} from 'react';
 import Navbar from '../Home/Navbar/Navbar.jsx';
 import './author.css';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { Autocomplete, Button, TextField} from '@mui/material';
-import {DataContext} from '../../context/DataProvider.jsx';
 import {API} from '../../service/api.js';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +14,7 @@ import 'firebase/compat/storage';
 const initialPost={
     title:'',
     description: '',
-    picture: '',
+    picture: 'https://i.pinimg.com/564x/5f/87/01/5f87010e0785926f488c70ec4b0836a6.jpg',
     email:'',
     name:'',
     category: '',
@@ -30,23 +29,34 @@ const initialPost={
 const Author=()=>{
     const [post,setPost]=useState(initialPost);
     const [tags,setTags]=useState([]);
+    const [profile, setProfile] = useState([]);
     
-    const account=useContext(DataContext);
+    const account=JSON.parse(localStorage.getItem('account'));
 
     const navigate=useNavigate();
     
-      useEffect(() => {
-        console.log('Updated Post:', post); // Log to check the updated post state
-        console.log('account: ', account);
-      }, [post,account]);
+    useEffect(() => {
+      const fetchData=async()=>{
+          try{
+              let userProfile = await API.getProfile(account.email);
+              if(userProfile.isSuccess)
+              {
+                  setProfile(userProfile.data);
+              }
+          }catch(error){
+              console.log('error fetching profile', error);
+          }
+      }
+      fetchData();
+    }, [account.email]);
 
       const handleChange = (e) => {
         const { name, value } = e.target;
         setPost(prevPost => ({
             ...prevPost,
             [name]: value,
-            email: account && account.account.email ,
-            name: account && account.account.name
+            email: account.email ,
+            name: account.name
         }));
     };
 
@@ -84,13 +94,14 @@ const Author=()=>{
             const response = await API.blogCreate(post);
             if(response.isSuccess)
             {
-                navigate('/');
-                console.log('Successfully created blog.');
-                setPost(initialPost);
-                setTags([]);
-            }
-            else{
-                console.log('Error creating blog.');
+                const response2 = await API.sendNotif([`/details/${response.data._id}`, profile.picture, `'${account.name}' has created a new blog '${post.title}'.` , profile.subscribers]);
+                if(response2.isSuccess)
+                {
+                    navigate('/');
+                    console.log('Successfully created blog and sent notifications.');
+                    setPost(initialPost);
+                    setTags([]);   
+                }
             }
         } catch(error){
             console.log('Error occured while creating blog', JSON.stringify(error,null,2));

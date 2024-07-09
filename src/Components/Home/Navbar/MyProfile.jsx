@@ -50,6 +50,7 @@ const StyledMenu = styled((props) => (
 
 export default function Dropdown() {
     const navigate = useNavigate();
+    const account = JSON.parse(localStorage.getItem('account'));
 
     const handleLogout=async()=>{
         localStorage.removeItem('accessToken');
@@ -59,14 +60,8 @@ export default function Dropdown() {
         navigate('/login');
     }
 
-    const handleClick = (route,query) => {
-        return () => {
-            if (query) {
-                navigate(`${route}?category=${query}`);
-            } else {
-                navigate(route);
-            }
-        };
+    const handleProfile=()=>{
+      navigate(`/profile/${account.email}/${true}`);
     }
     
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -75,6 +70,7 @@ export default function Dropdown() {
     const handleClicked = (event) => {
       setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
       setAnchorEl(null);
     };
@@ -99,7 +95,7 @@ export default function Dropdown() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClick('/profile')} disableRipple>
+        <MenuItem onClick={handleProfile} disableRipple>
             Profile
         </MenuItem>
         <MenuItem onClick={handleLogout} disableRipple>

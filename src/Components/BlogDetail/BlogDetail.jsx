@@ -138,7 +138,7 @@ const BlogDetail=()=>{
     const sendComment=async()=>{
         if(!comment) return;
         try{
-            const response=await API.putComment([comment, userProfile.name,userProfile.picture,id]);
+            const response=await API.putComment([comment, userProfile.email, userProfile.name,userProfile.picture,id]);
             if(response.isSuccess){
                 const name = userProfile.name, picture=userProfile.picture, date=new Date();
                 const newcomment = {picture, name, comment, date};
@@ -185,7 +185,7 @@ const BlogDetail=()=>{
                     <div className='author-details'>
 
                         <div className='author-profile-pic-container'>
-                            <Link to={`/details/${post._id}/profile`}>
+                            <Link to={`/profile/${authorProfile.email}/${false}`}>
                                 <img className='author-profile-pic' src={authorProfile.picture?authorProfile.picture:"https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"} alt="profile-pic" />
                             </Link>
                         </div>
@@ -249,7 +249,9 @@ const BlogDetail=()=>{
                                 return(
                                     <div className='prevComment-box' key={index}>
                                         <div className='old-comment-profile-pic'>
-                                            <img className='author-profile-pic' src={comment.picture} alt="user-pic" />
+                                            <Link to={`/profile/${comment.email}/${false}`}>
+                                                <img className='author-profile-pic' src={comment.picture} alt="user-pic" />
+                                            </Link>
                                         </div>
                                         <div style={{maxWidth:"80%"}}>
                                             <h1 className='old-comment-name'>{comment.name}</h1>

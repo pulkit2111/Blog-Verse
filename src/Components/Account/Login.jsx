@@ -13,6 +13,9 @@ import Logo from '../../Images/Blog verse.png'
 //material ui
 import Checkbox from '@mui/material/Checkbox';
 import profileBg from '../../Images/profile.png';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
 
 //helper files
 import { API } from "../../service/api.js";
@@ -37,8 +40,13 @@ const Login=({isUserAuthenticated})=>{
     const [login, setLogin] = useState(loginInitialValues);
     const [successMessage, setSuccessMessage]=useState('');
 
+    const [showPassword, setShowPassword] = useState(false);
     const {setAccount} = useContext(DataContext);
     const navigate = useNavigate();
+
+    const togglePasswordVisibility=()=>{
+        setShowPassword(!showPassword);
+    }
 
     const toggleSignup = ()=>{
         account==='login'?toggleAccount('signup'):toggleAccount('login');
@@ -143,7 +151,22 @@ const Login=({isUserAuthenticated})=>{
                     <h1 className="login-field">Email Address</h1>
                     <input type="email" className="login-input" value={login.email} onChange={(event)=>onLoginChange(event)} name="email"/>
                     <h1 className="login-field" >Password</h1>
-                    <input type="text " className="login-input" value={login.password} onChange={(event)=>onLoginChange(event)} name="password"/>
+                    <div className='password-container'>
+                        <input 
+                            type={showPassword?"text" : "password"}
+                            className="login-input" 
+                            value={login.password} 
+                            onChange={(event)=>onLoginChange(event)} 
+                            name="password"
+                        />
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={togglePasswordVisibility}
+                            edge="end"
+                        >
+                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                        </IconButton>
+                    </div>
 
                     <div style={{marginTop:"1vw"}}>
                         <Checkbox style={{float:"left"}}/>
@@ -186,7 +209,21 @@ const Login=({isUserAuthenticated})=>{
                     <h1 className="login-field">Email Address</h1>
                     <input type="email" className="login-input"  name="email" onChange={(event)=>onInputChange(event)}/>
                     <h1 className="login-field">Password</h1>
-                    <input type="text" className="login-input" name="password" onChange={(event)=>onInputChange(event)} />
+                    <div className='password-container'>
+                        <input 
+                            type={showPassword?"text" : "password"}
+                            className="login-input" 
+                            onChange={(event)=>onInputChange(event)} 
+                            name="password"
+                        />
+                        <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={togglePasswordVisibility}
+                            edge="end"
+                        >
+                        {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                        </IconButton>
+                    </div>
                 </form>
 
                     <div style={{marginTop:"1vw"}}>

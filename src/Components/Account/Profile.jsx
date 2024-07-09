@@ -1,6 +1,5 @@
-import { useContext , useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import Navbar from "../Home/Navbar/Navbar";
-import { DataContext } from "../../context/DataProvider";
 import './profile.css'
 import { API } from "../../service/api";
 import { Button , Grid} from "@mui/material";
@@ -13,86 +12,35 @@ import profileBg from '../../Images/profile.png';
 import firebase from "firebase/compat/app";
 import 'firebase/compat/storage';
 
-const Profile=({isMine})=>{
-    const account=useContext(DataContext);
-    const {id}=useParams();
-    const [email,setEmail]=useState('');
+const Profile=()=>{
+    console.log('hi');
+    const {email, isMine}=useParams();
+    console.log("userEmail: ", email);
     const [profile,setProfile]=useState([]);
     const [posts,setPosts]=useState([]);
     const [loading,setLoading] = useState(false);
     const [successMessage, setSuccessMessage]= useState("");
 
     useEffect(() => {
-        const fetchData = async()=>{
-            if (id) {
-                try {
-                    let response = await API.getPostById(id);
-                    if (response && response.isSuccess) {
-                        const fetchedPost = response.data;
-                        setEmail(fetchedPost.email);
-                        console.log('post: ', fetchedPost);
-                    }
-                } catch (error) {
-                    setSuccessMessage('Please Login!');
+        const fetchData = async()=>
+        {
+            try {
+                let userProfile = await API.getProfile(email);
+                let userPosts = await API.getUserPosts(email);
+                if (userProfile.isSuccess) {
+                    setProfile(userProfile.data);
                 }
+                if(userPosts.isSuccess){
+                    setPosts(userPosts.data);
+                }
+            } catch (error) {
+                setSuccessMessage('Failed to show profile!');
             }
-        };
+        }
         fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[id])
+    },[email])
 
-    useEffect(() => {
-        console.log('account: ', account);
-      }, [account]);
-
-    useEffect(()=>{
-        const fetchProfile=async()=>{
-            let apiResponse;
-            try{
-                if (isMine) {
-                    apiResponse = await API.getProfile(account.account.email);
-                } else {
-                    apiResponse = await API.getProfile(email);
-                }
-    
-                if (apiResponse && apiResponse.isSuccess) {
-                    setProfile(apiResponse.data);
-                    console.log("profile: ", apiResponse.data);
-                } 
-            }catch(error){
-                setSuccessMessage('Please Log in!');
-            }
-
-        };
-        if ((isMine && account.account.email) || (!isMine && email)) {
-            fetchProfile();
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[account.account.email,email,isMine]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            let response;
-            try{
-                if (isMine && account.account.email) {
-                    response = await API.getUserPosts(account.account.email);
-                } else if (email) {
-                    response = await API.getUserPosts(email);
-                }
-                if (response && response.isSuccess) {
-                    setPosts(response.data);
-                    console.log('posts: ', posts);
-                }
-            }catch(error){
-                setSuccessMessage('Please Login!');
-            }
-        };
-
-        if ((isMine && account.account.email) || (!isMine && email)) {
-            fetchData();
-        }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [account.account.email, email, isMine]);
 
     const handleupdate = (field, value) => {
         const updatedProfile = { ...profile, [field]: value };
@@ -141,7 +89,7 @@ const Profile=({isMine})=>{
                 <div className="profileBGPicContainer">
                     <img className="profileBGPic" src={profile.bgPicture?profile.bgPicture: "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"} alt="profileBGPicture" />
                     {
-                        isMine===true?(
+                        isMine==='true'?(
                             <EditableField
                             value={profile.bgPicture ? profile.bgPicture : "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"}
                             onSave={handleBGImageUpload}
@@ -160,7 +108,7 @@ const Profile=({isMine})=>{
                     <div className="profilePicContainer">
                         <img className="profilePic" src={profile.picture?profile.picture: profileBg} alt="profilePicture" />
                         {
-                            isMine===true?(
+                            isMine==='true'?(
                                 <EditableField
                                 value={profile.picture ? profile.picture : profileBg}
                                 onSave={handleImageUpload}                             
@@ -174,7 +122,7 @@ const Profile=({isMine})=>{
                     </div>
 
                         {
-                            isMine===true?(
+                            isMine==='true'?(
                                 <div className="edit">
                                 <Button variant="outlined" style={{textTransform:"none"}} onClick={()=>handleSave()}>Update Profile</Button>
                             </div>
@@ -185,7 +133,7 @@ const Profile=({isMine})=>{
 
 
                     {
-                        isMine===true?(
+                        isMine==='true'?(
                             <h1 style={{cursor:"pointer"}}>
                                 <EditableField value={profile.name} onSave={(value) => handleupdate('name', value)} />
                             </h1>
@@ -199,7 +147,7 @@ const Profile=({isMine})=>{
                     <div className="about-profile">
                         <p className="about">About: </p>
                         {
-                        isMine===true?(
+                        isMine==='true'?(
                             <p style={{cursor:"pointer", width:"100%"}} >
                                 <EditableField value={profile.about} onSave={(value)=>handleupdate('about',value)} />
                             </p>
@@ -241,7 +189,7 @@ const Profile=({isMine})=>{
                     <div>
                         <h1 className="recentBlogs">Recent Blogs</h1>
                         {
-                            isMine===true?(
+                            isMine==='true'?(
                                 <Grid container spacing={1}>
                                 {
                                     posts && posts.length>0 ? posts.map(post =>{

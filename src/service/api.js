@@ -93,19 +93,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
       data: value.method==='DELETE'?{}:body,
       responseType: value.responseType,
       TYPE: getType(value,body),
-      withCredentials: true,
-      onUploadProgress: (progressEvent) => {
-        if (showUploadProgress) {
-          let percentageCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          showUploadProgress(percentageCompleted);
-        }
-      },
-      onDownloadProgress: (progressEvent) => {
-        if (showDownloadProgress) {
-          let percentageCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          showDownloadProgress(percentageCompleted);
-        }
-      }
+      withCredentials: true
     });
 }
 
