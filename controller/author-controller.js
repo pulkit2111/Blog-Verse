@@ -5,7 +5,7 @@ export const newBlog=async(req,res) =>{
     const userBlog= await new Post(req.body);
     await userBlog.save();
     console.log('Blog added to database.');
-    res.status(200).json({message: 'Blog created successfully'});
+    res.status(200).json(userBlog);
     }
     catch (error){
         console.error('Error creating blog');
@@ -41,8 +41,6 @@ export const updatePosts=async(req,res)=>{
     try {
         const email = req.body[0];
         const newName = req.body[1];
-        console.log('newName: ',newName);
-        console.log('user email: ',email);
         // Update the name field of all posts that match the email
         const result = await Post.updateMany(
             { email: email },

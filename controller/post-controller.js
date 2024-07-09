@@ -73,11 +73,11 @@ export const like= async(req,res)=>{
 }
 
 export const putComment=async(req,res)=>{
-    const [comment, name, picture,id]=req.body;
+    const [comment,email, name, picture,id]=req.body;
     try{
         const post = await Post.findById(id);
         const date=new Date();
-        post.comments.push({picture, name, comment, date});
+        post.comments.push({picture,email, name, comment, date});
         await post.save();
         return res.status(200).json({msg: 'Successfully commented!'});
     }catch(error){

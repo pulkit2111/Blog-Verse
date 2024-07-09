@@ -4,6 +4,7 @@ import {newBlog, showPosts, showPostById, deletePost, updatePosts} from '../cont
 import { authenticateToken } from '../controller/jwt-controller.js';
 import { getRelatedPosts } from '../controller/relatedPost-controller.js';
 import { subscribe, showSubscribers, like , putComment} from '../controller/post-controller.js';
+import {sendNotif, getNotifs, deleteNotifs} from '../controller/notification-controller.js';
 import passport from '../controller/passport-controller.js';
 
 const router=express.Router();
@@ -13,6 +14,7 @@ router.post('/login',passport.authenticate('local'), loginUser);
 router.post('/createBlog', authenticateToken,newBlog);
 router.post('/refresh-token', refreshToken);
 router.post('/logout', logout);
+router.post('/sendNotif', authenticateToken, sendNotif);
 
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email'] }));
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), googleCallback)
@@ -22,6 +24,7 @@ router.get('/profile/:email',authenticateToken, showProfile);
 router.get('/userPosts/:email',authenticateToken, showUserPosts);
 router.get('/getSubscribers/:email', authenticateToken, showSubscribers);
 router.get('/getRelatedPosts/:id', authenticateToken,getRelatedPosts);
+router.get('/getNotifs/:email', authenticateToken, getNotifs);
 
 router.put('/updateProfile/:id',authenticateToken, updateProfile);
 router.put('/updatePosts',authenticateToken, updatePosts );
@@ -30,5 +33,6 @@ router.put('/like',authenticateToken, like);
 router.put('/putComment',authenticateToken, putComment);
 
 router.delete('/deletePost/:id', authenticateToken, deletePost);
+router.delete('/deleteNotifs/:email', authenticateToken, deleteNotifs);
 // (route, middleware,function) middleware is very important
 export default router;
