@@ -124,8 +124,8 @@ const Profile=()=>{
                         {
                             isMine==='true'?(
                                 <div className="edit">
-                                <Button variant="outlined" style={{textTransform:"none"}} onClick={()=>handleSave()}>Update Profile</Button>
-                            </div>
+                                    <Button variant="outlined" style={{textTransform:"none"}} onClick={()=>handleSave()}>Update Profile</Button>
+                                </div>
                             ):(
                                 <></>
                             )
@@ -166,6 +166,10 @@ const Profile=()=>{
                         <div>
                             <h1>{ profile.subscribers && profile.subscribers.length}</h1>
                             <p>SUBSCRIBERS</p>
+                        </div>
+                        <div>
+                            <h1>{ profile.subscriptions && profile.subscriptions.length}</h1>
+                            <p>SUBSCRIPTIONS</p>
                         </div>
                     </div>
 

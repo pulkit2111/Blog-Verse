@@ -73,6 +73,23 @@
 .notifications{
     margin: auto;
     margin-right: 1vw;
+    position: relative;
+}
+
+.notifications p{
+    position: absolute;
+    top: -20px;
+    right: -15px;
+    background-color: red;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    color: white;
+    padding: 10%;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    font-weight: 700;
 }
 
 .notifi-box{

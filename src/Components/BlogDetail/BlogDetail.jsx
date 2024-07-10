@@ -16,6 +16,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import {formatDistanceToNow} from 'date-fns';
 import profileBg from '../../Images/profile.png'
+import { ShareButtons } from './ShareButtons.jsx';
 
 const BlogDetail=()=>{
     const account=useContext(DataContext);
@@ -229,6 +230,10 @@ const BlogDetail=()=>{
                             </div>
                             {commentOpen? <p  style={{color:"blue"}}>Comment</p> : <p>Comment</p>}
                             <p className='category'>{commentCount}</p>
+                        </div>
+
+                        <div style={{float:"right"}}>
+                            <ShareButtons url={window.location.href} title={post.title}/>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import {API} from '../../../service/api.js';
 import Post from "./Post/Post.jsx";
 import { Grid } from "@mui/material";
 import {useSearchParams} from 'react-router-dom';
+import Search from '../Banner/Search.jsx';
 
 const Control=()=>{
     const [posts,setPosts]=useState([]);
@@ -29,21 +30,26 @@ const Control=()=>{
 
     return(
         <>
-            {
-                posts && posts.length>0 ? posts.map(post =>{
-                    return (
-                        <Grid item lg={4} sm={6} xs={12} key={post._id}>
-                            <Post post={post} isAuthor={false}/>
-                        </Grid>
-                    )
-                })
-                : <div>No posts available</div>
-            }
-            {successMessage && (
-                <div className="successMessage">
-                    {successMessage}
-                </div>
-            )}
+            <div  style={{position:"absolute", top:"25vw", left:"40%", zIndex:"20"}}>
+                <Search posts={posts} category={category}/>
+            </div>
+            <Grid container spacing={2}>
+                {
+                    posts && posts.length>0 ? posts.map(post =>{
+                        return (
+                            <Grid item lg={4} sm={6} xs={12} key={post._id}>
+                                <Post post={post} isAuthor={false}/>
+                            </Grid>
+                        )
+                    })
+                    : <div>No posts available</div>
+                }
+                {successMessage && (
+                    <div className="successMessage">
+                        {successMessage}
+                    </div>
+                )}
+            </Grid>
         </>
     )
 }

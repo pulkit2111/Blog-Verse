@@ -23,7 +23,6 @@ const Navbar=()=>{
                 const response = await API.getNotifs(account.account.email);
                 if(response.isSuccess)
                 {
-                    console.log('notifs: ', response.data.notifs);
                     setNotifs(response.data.notifs);
                 }
             }catch(error){
@@ -79,7 +78,8 @@ const Navbar=()=>{
 
             <div className='navbar-right'>
                 <div className='notifications'>
-                    <NotificationsNoneIcon onClick={toggleNotifi}/>
+                    <NotificationsNoneIcon onClick={toggleNotifi} />
+                    {notifs.length ? <p>{notifs.length}</p> : <></>}
                 </div>
 
                 <div className='search'>        
@@ -104,7 +104,7 @@ const Navbar=()=>{
                                             <div className='comment-profile-pic notifi-img'>
                                                 <img className='author-profile-pic' src={notif.picture} alt="user-pic" />
                                             </div>
-                                            <div style={{maxWidth:"80%"}}>
+                                            <div style={{maxWidth:"70%"}}>
                                                 <p className='incoming-name'>{notif.content}</p>
                                                 <p className='incoming-time'>{formatDistanceToNow(new Date(notif.date), {addSuffix:true})}</p>
                                             </div>

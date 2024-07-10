@@ -108,6 +108,15 @@ const Author=()=>{
         }
     }
 
+    
+    const categories=[
+        'Travel', 'Technology', 'Fashion', 'Food', 'Cars', 'Nature'
+    ];
+
+    const tagss=[
+        '#new', '#innovative', '#business', '#saveEarth','#style'
+    ];
+
     return(
         <div>
             <Navbar isAuthor={true}/>
@@ -147,7 +156,7 @@ const Author=()=>{
                         style={{width:"84%", margin:"auto"}}
                         multiple
                         id="tags-outlined"
-                        options={categories}
+                        options={tagss}
                         getOptionLabel={(option) => option}
                         filterSelectedOptions
                         value={tags}
@@ -173,9 +182,5 @@ const Author=()=>{
     </div>
     )
 }
-
-const categories=[
-    'Travel', 'Technology', 'Fashion'
-];
 
 export default Author;

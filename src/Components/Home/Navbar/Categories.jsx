@@ -95,10 +95,16 @@ export default function Dropdown() {
           Food
         </MenuItem>
         <MenuItem onClick={handleClick('Fashion')} disableRipple>
-        Fashion
+          Fashion
         </MenuItem>
         <MenuItem onClick={handleClick('Technology')} disableRipple>
-        Technology
+          Technology
+        </MenuItem>
+        <MenuItem onClick={handleClick('Cars')} disableRipple>
+          Cars
+        </MenuItem>
+        <MenuItem onClick={handleClick('Cars')} disableRipple>
+          Nature
         </MenuItem>
       </StyledMenu>
     </div>

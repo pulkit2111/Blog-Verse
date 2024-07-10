@@ -1,12 +1,13 @@
 .profile-outer{
     background-color: rgb(245, 245, 245);
-    padding-top: 10vw;
 }
 
 .profile-box{
     width: 60%;
-    margin: auto;
+    margin: auto ;
     position: relative;
+    padding-bottom: 5vw;
+    padding-top:4.5vw;
     background-color: white;
 }
 
@@ -69,7 +70,7 @@
 .edit{
     cursor: pointer;
     position: absolute;
-    top: 16vw;
+    top: 20vw;
     right: 1vw;
 }
 
@@ -119,7 +120,10 @@
 }
 
 .subscribers{
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .subscribers h1{
@@ -132,7 +136,7 @@
 
 .subscribers div{
     display: inline-block;
-    width: 6vw;
+    margin: 0 1vw;
 }
 
 .subscribers div h1{

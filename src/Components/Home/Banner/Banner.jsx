@@ -1,12 +1,10 @@
 import React from 'react';
 import './banner.css';
-import Search from './Search';
 
 const Banner=()=>{
     return (
     <div className='banner'>
         <h1 className='banner-heading'>Blog Verse <br />Blogs and Stories</h1>
-        <Search />
         <div className='top-left'>
             <img className='banner-img' style={{height: "10vw", width:"10vw" }} src="https://i.pinimg.com/564x/7d/83/c5/7d83c5b60ee45f5949183aa587b665c4.jpg" alt="" />
             <img className='banner-img' style={{height:"7vw", width:"7vw"}} src="https://i.pinimg.com/564x/5f/87/01/5f87010e0785926f488c70ec4b0836a6.jpg" alt="" />
