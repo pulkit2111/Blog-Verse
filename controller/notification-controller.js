@@ -31,5 +31,10 @@ export const getNotifs=async(req,res)=>{
 
 export const deleteNotifs=async(req,res)=>{
     const email = req.params.email;
-    await Notifs.findOneAndDelete({email});
+    try{
+        const response = await Notifs.findOneAndDelete({email});
+        return res.status(200).json({msg: 'Notifications deleted successfully.'});
+    }catch(error){
+        return res.status(200).json({msg: 'Notification deletion unsuccessful'});
+    }
 }
