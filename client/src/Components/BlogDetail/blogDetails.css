@@ -197,6 +197,7 @@
 
 .send-icon-comment{
     margin: auto 1vw auto auto ;
+    cursor: pointer;
 }
 
 .prevComment-box{
