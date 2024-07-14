@@ -2,12 +2,10 @@ import mongoose from "mongoose";
 
 const userSchema=mongoose.Schema({
     name:{
-        type:String,
-        required:true
+        type:String
     },
     phone:{
-        type:Number,
-        required:true
+        type:Number
     },
     email:{
         type:String,
@@ -18,13 +16,12 @@ const userSchema=mongoose.Schema({
         type: String
     },
     password:{
-        type:String,
-        required:true
+        type:String
     },
     googleId:{
         type:String
     }
 })
 
-const User=mongoose.model('user',userSchema);
+const User=mongoose.model('users',userSchema);
 export default User;
