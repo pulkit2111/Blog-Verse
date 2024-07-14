@@ -18,8 +18,10 @@ dotenv.config();
 
 const app=express();
 
+const react_port = process.env.REACT_PORT;
+
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: `http://localhost:${react_port}`,
     credentials: true // Allow credentials (cookies)
   };
 
@@ -51,7 +53,7 @@ app.use('/',Router);
 //   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 // });
 
-const PORT = 3001;
+const port = process.env.PORT;
 
-app.listen(PORT, ()=>console.log(`Server is running at port ${PORT}`));
+app.listen(port, ()=>console.log(`Server is running at port ${port}`));
 Connection;
