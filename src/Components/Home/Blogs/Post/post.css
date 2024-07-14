@@ -91,3 +91,75 @@
     border-radius: 5px;
     padding: 2px 4px;
 }
+
+@media screen and (max-width: 700px)
+{
+    .post-image{
+        width: 100%; 
+        height: 30vh;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .img-icon {
+        font-size: 24px; /* Adjust size as necessary */
+    }
+    
+    
+    .post-content{
+        padding: 4%;
+        text-align: left;
+        position: relative;
+    }
+    
+    .post-edit{
+        position: relative;
+        text-align: center;
+        height: 2vw;
+    }
+    
+    .post-author{
+        float: left;
+    }
+    
+    .changePost{
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .post-date{
+        float: right;
+    }
+
+    .post-name{
+
+    }
+    
+    .post-name h1{
+        display: inline-block;
+        font-size: 140%;
+        margin-top:10%;
+    }
+    
+    .detail-link{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    
+    .post-content p{
+        font-size: 120%;
+        display: inline-block;
+        font-weight: 500;
+    }
+    
+    .tags p{
+        display: inline-block;
+        margin-right: 1vw;
+        border: 1px solid rgb(169, 168, 168);
+        border-radius: 5px;
+        padding: 2px 4px;
+    }
+    
+}

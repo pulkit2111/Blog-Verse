@@ -10,3 +10,9 @@ body{
   font-weight: 400;
   font-style: normal;
 }
+
+@media (max-width:700px) {
+  body{
+    font-size: 15px;
+  }
+}

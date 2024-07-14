@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import EditIcon from '@mui/icons-material/Edit';
 import './profile.css';
 
 const EditableField = ({ value, onSave, type = 'text' ,field}) => {
@@ -25,7 +24,7 @@ const EditableField = ({ value, onSave, type = 'text' ,field}) => {
             <>
                 <label htmlFor={`imageInput-${field}`}>
                     <div className='editIconDiv'>
-                        <EditIcon className='editIcon'/>
+                        <h1>Edit</h1>
                     </div>
                 </label>
                 <input

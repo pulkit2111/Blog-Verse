@@ -131,14 +131,14 @@ const Login=({isUserAuthenticated})=>{
                     <div className='logo-container'>
                         <img src={Logo} alt="logo" className='logo'/>
                     </div>
-                    <h1 style={{fontSize:"2vw"}}>Welcome Back!</h1>
-                    <p>Please Enter Your Details</p>
+                    <h1>Welcome Back!</h1>
+                    <p className='please-enter-details'>Please Enter Your Details</p>
                 </div>
 
-                <div style={{margin:"1vw 0 1vw 0"}}>
-                    <button className="loginThrough" style={{float:"left"}} onClick={()=>{handleGoogle()}}><img src={Google} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
+                <div className='loginThrough-container'>
+                    <button className="loginThrough" onClick={()=>{handleGoogle()}}><img src={Google} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
                     <button className="loginThrough"><img src={Facebook} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
-                    <button className="loginThrough" style={{float:"right"}}><img src={Apple} alt="google logo" style={{width: "1.5vw", float:"right"}} /></button>
+                    <button className="loginThrough"><img src={Apple} alt="google logo" style={{width: "1.5vw", float:"right"}} /></button>
                 </div>
 
                 <div>
@@ -168,10 +168,12 @@ const Login=({isUserAuthenticated})=>{
                         </IconButton>
                     </div>
 
-                    <div style={{marginTop:"1vw"}}>
-                        <Checkbox style={{float:"left"}}/>
-                        <h1 style={{display:"inline-block", fontSize: "small", float:"left"}}>Remember Me</h1>
-                        <h1 style={{display:"inline-block", fontSize: "small", float:"right", cursor:"pointer"}} onClick={()=>toggleSignup()}>Forgot Password?</h1>
+                    <div className='remember-me'>
+                        <div>
+                            <Checkbox style={{float:"left"}}/>
+                            <h1 style={{display:"inline-block", fontSize: "small"}}>Remember <br /> Me</h1>
+                        </div>
+                        <h1 style={{display:"inline-block", fontSize: "small", cursor:"pointer"}} onClick={()=>toggleSignup()}>Forgot <br /> Password?</h1>
                     </div>
 
                     <button className="sign-in" onClick={()=>loginUser()}>Log In</button>
@@ -184,11 +186,12 @@ const Login=({isUserAuthenticated})=>{
                 <div>
                     <div className='logo-container'>
                         <img src={Logo} alt="logo" className='logo'/>
-                    </div>                    <h1 style={{fontSize:"2vw"}}>Welcome !</h1>
-                    <p>Please Enter Your Details</p>
+                    </div>                    
+                    <h1>Welcome !</h1>
+                    <p className='please-enter-details'>Please Enter Your Details</p>
                 </div>
 
-                <div style={{margin:"1vw 0 1vw 0"}}>
+                <div className='loginThrough-container'>
                 <button className="loginThrough" style={{float:"left"}} onClick={()=>{handleGoogle()}}><img src={Google} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
                 <button className="loginThrough"><img src={Facebook} alt="google logo" style={{width: "1.5vw", float:"left"}} /></button>
                     <button className="loginThrough" style={{float:"right"}}><img src={Apple} alt="google logo" style={{width: "1.5vw", float:"right"}} /></button>
@@ -226,7 +229,7 @@ const Login=({isUserAuthenticated})=>{
                     </div>
                 </form>
 
-                    <div style={{marginTop:"1vw"}}>
+                    <div className='remember-me'>
                         <Checkbox style={{float:"left"}}/>
                         <h1 style={{display:"inline-block", fontSize: "small", float:"left"}}>Remember Me</h1>
                     </div>

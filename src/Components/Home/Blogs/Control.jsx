@@ -30,7 +30,7 @@ const Control=()=>{
 
     return(
         <>
-            <div  style={{position:"absolute", top:"25vw", left:"40%", zIndex:"20"}}>
+            <div className="search-posts">
                 <Search posts={posts} category={category}/>
             </div>
             <Grid container spacing={2}>

@@ -90,12 +90,14 @@ const Profile=()=>{
                     <img className="profileBGPic" src={profile.bgPicture?profile.bgPicture: "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"} alt="profileBGPicture" />
                     {
                         isMine==='true'?(
-                            <EditableField
-                            value={profile.bgPicture ? profile.bgPicture : "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"}
-                            onSave={handleBGImageUpload}
-                            type="file"
-                            field="bgPicture"
+                            <div className="bg-edit-icon">
+                                <EditableField
+                                value={profile.bgPicture ? profile.bgPicture : "https://img.freepik.com/premium-photo/random-best-photo_865967-169651.jpg?w=826"}
+                                onSave={handleBGImageUpload}
+                                type="file"
+                                field="bgPicture"
                             />
+                            </div>
                         ):(
                             <></>
                         )
@@ -134,7 +136,7 @@ const Profile=()=>{
 
                     {
                         isMine==='true'?(
-                            <h1 style={{cursor:"pointer"}}>
+                            <h1 className="profile-name">
                                 <EditableField value={profile.name} onSave={(value) => handleupdate('name', value)} />
                             </h1>
                         ):(
@@ -142,7 +144,7 @@ const Profile=()=>{
                         )
                     }
 
-                    <p style={{margin:"-1.5vw 0 2vw", color:"gray"}}>{profile.email}</p>
+                    <p className="profile-email">{profile.email}</p>
 
                     <div className="about-profile">
                         <p className="about">About: </p>

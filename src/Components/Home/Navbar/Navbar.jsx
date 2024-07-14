@@ -70,9 +70,9 @@ const Navbar=()=>{
 
             <div className='categories' id='categories'>
                 <ul>
-                    <li><Button varient="text" style={{textTransform:"none", color:"black"}} onClick={handleClick('/')}>Home</Button></li>
-                    <Categories/>
-                    <li><Button varient="text" style={{textTransform:"none", color:"black"}} onClick={handleClick('/author')}>Start your Blog</Button></li>
+                    <li><Button varient="text" style={{textTransform:"none", color:"black"}} id='middle-button' onClick={handleClick('/')}>Home</Button></li>
+                    <li><Categories/></li>
+                    <li><Button varient="text" style={{textTransform:"none", color:"black"}} id='middle-button' onClick={handleClick('/author')}>Start your Blog</Button></li>
                 </ul>
             </div>   
 
@@ -101,7 +101,7 @@ const Navbar=()=>{
                                 notifs && notifs.length ? notifs.sort((a,b) =>new Date(b.date)-new Date(a.date)).map((notif, index)=>{
                                     return(
                                         <div className='incoming-notification' key={index}>
-                                            <div className='comment-profile-pic notifi-img'>
+                                            <div className='notifi-img'>
                                                 <img className='author-profile-pic' src={notif.picture} alt="user-pic" />
                                             </div>
                                             <div style={{maxWidth:"70%"}}>

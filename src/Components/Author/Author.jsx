@@ -130,44 +130,43 @@ const Author=()=>{
                     <textarea className='author-textarea' placeholder="Text..." rows={5} onChange={(e)=>handleChange(e)} name='description'/>
 
                     <div className='extra'>
-                    <Autocomplete 
-                        className='category'
-                        disablePortal
-                        id="combo-box-demo"
-                        options={categories}
-                        sx={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} label="Category" />}
-                        onChange={handleCategory}
-                        value={post.category}
-                    />
+                        <Autocomplete 
+                            disablePortal
+                            id="combo-box-demo"
+                            options={categories}
+                            value={categories.includes(post.category) ? post.category : null}                        sx={{ width: 300 }}
+                            renderInput={(params) => <TextField {...params} label="Category" />}
+                            onChange={handleCategory}
+                            isOptionEqualToValue={(option,value)=>option===value}
+                        />
 
-                    <Button variant='outlined' style={{position:"absolute", marginTop: "0vw", height:"7.5vh"}}>
-                        <label htmlFor="fileInput">
-                            Add Image 
-                            <AddAPhotoIcon />
-                        </label>
-                    </Button>
-                    <input type="file" id='fileInput' style={{display:"none"}} onChange={handleFileUpload}/>
+                        <Button variant='outlined' style={{margin:"auto"}} id='add-image-button'>
+                            <label htmlFor="fileInput" id='add-image-label'>
+                                Add Image 
+                                <AddAPhotoIcon id='add-a-photo-icon'/>
+                            </label>
+                        </Button>
+                        <input type="file" id='fileInput' style={{display:"none"}} onChange={handleFileUpload}/>
 
                     </div>
 
-                    <div>
-                    <Autocomplete
-                        style={{width:"84%", margin:"auto"}}
-                        multiple
-                        id="tags-outlined"
-                        options={tagss}
-                        getOptionLabel={(option) => option}
-                        filterSelectedOptions
-                        value={tags}
-                        onChange={handleTagsChange}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label="Choose Tags"
-                          />
-                        )}
-                    />
+                    <div className='choose-tags'>
+                        <Autocomplete
+                            style={{width:"84%", margin:"auto"}}
+                            multiple
+                            id="tags-outlined"
+                            options={tagss}
+                            getOptionLabel={(option) => option}
+                            filterSelectedOptions
+                            value={tags}
+                            onChange={handleTagsChange}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label="Choose Tags"
+                              />
+                            )}
+                        />
                     </div>
 
                     <Button variant='contained' style={{margin: "2vw", height:"3.5vw"}} onClick={()=> createBlog()}>Publish</Button>

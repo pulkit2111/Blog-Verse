@@ -15,6 +15,7 @@
     width: 100%;
 }
 
+
 .mainDiv{
     padding-top: 1vw;
     text-align: center;
@@ -132,10 +133,17 @@
 .incoming-notification{
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    align-items: flex-start;
     text-align: left;
     padding: 1vw;
     border-bottom: 1px solid lightgray;
+}
+
+.notifi-img{
+    width: 4vw;
+    height: 4vw;
+    margin: 0;
+    margin-right: 1vw;
 }
 
 .incoming-name{
@@ -149,6 +157,101 @@
     font-size: 0.9vw;
     font-weight: 500;
 }
+
+@media screen and (max-width: 700px)
+{
+    .navBody{
+        height: 7%;
+    }
+    .topColor{
+        height: 10%;
+    }
+    .website-name button{
+        font-size: 20px;
+    }
+    #middle-button{
+        font-size: 70%;
+    }
+    .mainDiv{
+        padding-top:2vw;
+        /* display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between; */
+    }
+
+    .categories{
+        transform: scale(1.3);
+    }
+
+    
+    .notifications{
+        margin: auto;
+        margin-right: 1vw;
+        position: relative;
+    }
+
+    .notifications p{
+        right: -12px;
+        font-size: 80%;
+    }
+
+    .notifi-box{
+        width: 70%;
+        margin: 0 1vw 1vw auto;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 1px 3px 0 #bfbebe;
+        padding: 0;
+    }
+
+    .notification-top{
+        padding: 2vw;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between;
+        border-bottom: 2px solid lightgray;
+    }
+
+.notification-top h1{
+    font-size: 110%;
+    margin: 0 35% 0 1vw;
+}
+
+.notification-top p{
+    font-size: 100%;
+}
+
+.notifis{
+    background-color: aliceblue;
+    max-height: 20vw;
+    overflow-y: scroll;
+}
+
+.incoming-notification{
+    padding: 2vw;
+}
+
+.notifi-img{
+    width: 10vw;
+    height: 10vw;
+    margin-right: 2vw;
+}
+
+.incoming-name{
+    font-size: 120%;
+}
+
+.incoming-time{
+    margin: 0;
+    margin-top: 0.5vw;
+    opacity: 0.7;
+    font-size: 105%;
+    font-weight: 500;
+}
+}
+
 
 
 

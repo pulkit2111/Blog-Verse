@@ -73,6 +73,7 @@ export default function Dropdown() {
         onClick={handleClicked}
         disableRipple
         endIcon={<KeyboardArrowDownIcon />}
+        id='middle-button'
       >
         Categories
       </Button>

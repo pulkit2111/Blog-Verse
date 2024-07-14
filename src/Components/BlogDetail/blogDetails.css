@@ -36,6 +36,7 @@
     float: left;
     margin: 0;
     margin-left: 1.5vw;
+    font-style: italic;
 }
 
 .go-back{
@@ -239,4 +240,195 @@
 .read-more-link{
     cursor: pointer;
     color: rgb(0, 68, 255);
+}
+
+@media screen and (max-width: 700px)
+{   
+    .blogdetails{
+        background-color: rgb(245, 245, 245);
+        padding-top: 10vw;
+        padding-bottom: 5vw;
+        display: block;
+        font-size: 150%;
+    }
+
+    .blog-details-box{
+        width: 100%;
+    }
+
+    .blog{
+        width: 80%;
+        margin:5% auto 0;
+    }
+    
+    .relatedReads{
+        display: block;
+        width: 70%;
+        margin: auto;
+        margin-top: 5%;
+        font-size: 70%;
+    }
+    
+    .relatedBlogs-para{
+        font-size: 150%;
+        float: left;
+        margin: 0;
+        margin-left: 10%;
+    }
+
+
+    .category{
+        font-size: 50%;
+    }
+    
+    .author-details{
+        position: relative;
+    }
+    
+    .author-profile-pic-container{
+        width: 10%;
+        height: 10%;
+    }
+    
+    .blog-author-details{
+        display: inline-block;
+        margin-left: 1vw;
+        position: absolute;
+        top: 1vw;
+    }
+    
+    .subscribe-button-container{
+        position: absolute;
+        float: right;
+        top: 1vw;
+        right: 1vw;
+    }
+    
+    .by{
+        font-weight: bold;
+        font-size: 80%;
+        margin: 0 0 1vw 0;
+    }
+    
+    .blog-date{
+        font-size: 70%;
+        margin:0;
+    }
+    
+    .blog-img{
+        max-width: 100%;
+        max-height: 50vw;
+    }
+    
+    .blog h1{
+        font-size: 110%;
+    }
+    
+    .like-section{
+        margin-top: 5%;
+    }
+    
+    .like-section p{
+        display: inline-block;
+        margin: 0 0.3vw;
+    }
+    
+    .like{
+        float: left;
+        display: flex;
+        flex-direction: row;
+        align-items:baseline;
+        margin-right: 2vw;
+    }
+    
+    .comment{
+        float: left;
+        display: flex;
+        flex-direction: row;
+        align-items:baseline;
+        cursor: pointer;
+    }
+    
+    .comment-box{
+        width: 80%;
+        margin: auto;
+        margin-top: 0;
+        height: 20%;
+        position: relative;
+        border: 1px solid lightgray;
+        background-color: rgb(247, 250, 253);
+        padding: 1vw 2vw;
+        text-align: left;
+        box-shadow: 0 1px 3px 0 #939393;
+        display: inline-block;
+    }
+    
+    .comment-profile-pic{
+        width: 5%;
+        height: 5%;
+    }
+    
+    .addAComment{
+        background-color: white;
+        border-radius: 25px;
+        box-shadow: 0 1px 3px 0 #c3c2c2;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        padding: 1vw;
+    }
+    
+    .addAComment input{
+        border: none;
+        font-weight: 550;
+        margin: auto 0 auto;
+        outline: none;
+        opacity: 0.8;
+        width: 80%;
+        font-size: 70%;
+    }
+    
+    .prevComment-box{
+        padding: 1vw;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+    }
+    
+    .old-comment-profile-pic{
+        width: 7%;
+        height: 7%;
+        border-radius: 100%;
+        margin: auto 3% auto 0.5vw;
+        background-color: white;
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+    }
+    
+    .old-comment-name{
+        font-size: 70%;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 0;
+        opacity: 0.7;
+        font-weight: 500;
+    }
+    
+    .old-comment-time{
+        display: inline-block;
+        font-size: 60%;
+        opacity: 0.8;
+        margin-left: 1vw;
+        margin-bottom: 0;
+    }
+    
+    .old-comment-data{
+        margin-top: 0;
+    }
+    
+    .read-more-link{
+        cursor: pointer;
+        color: rgb(0, 68, 255);
+    }
 }
