@@ -176,8 +176,8 @@ const BlogDetail=()=>{
                     </div>
 
                     {
-                        post && post.tags && post.tags.map((tag) => {
-                            return(<p className='category'>{tag}</p>)
+                        post && post.tags && post.tags.map((tag, index) => {
+                            return(<p className='category' key={index}>{tag}</p>)
                         })
                     }
 
@@ -288,10 +288,10 @@ const BlogDetail=()=>{
                 <p className='relatedBlogs-para'>Related Blogs</p>
                 <Grid container spacing={3} columns={4}>
                     {
-                        posts && posts.length>0 ? posts.map(post =>{
+                        posts && posts.length>0 ? posts.map((post, index) =>{
                             return(
                             <Grid item lg={4} sm={6} xs={12} key={post._id}>
-                                <Post post={post} isAuthor={false}/>
+                                <Post post={post} isAuthor={false}  key={post._id}/>
                             </Grid>
                             )
                         })
