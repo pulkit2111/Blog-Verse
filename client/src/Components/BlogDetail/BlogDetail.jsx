@@ -186,15 +186,17 @@ const BlogDetail=()=>{
 
                         <div className='author-details'>
 
-                            <div className='author-profile-pic-container'>
-                                <Link to={`/profile/${authorProfile.email}/${false}`}>
-                                    <img className='author-profile-pic' src={authorProfile.picture?authorProfile.picture:"https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"} alt="profile-pic" />
-                                </Link>
-                            </div>
+                            <div className='only-author-details'>
+                                <div className='author-profile-pic-container'>
+                                    <Link to={`/profile/${authorProfile.email}/${false}`}>
+                                        <img className='author-profile-pic' src={authorProfile.picture?authorProfile.picture:"https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"} alt="profile-pic" />
+                                    </Link>
+                                </div>
 
-                            <div className='blog-author-details'>
-                                <p className='by'>by {post.name}</p>
-                                <p className='blog-date'>{post.createdDate}</p>
+                                <div className='blog-author-details'>
+                                    <p className='by'>by {post.name}</p>
+                                    <p className='blog-date'>{post.createdDate}</p>
+                                </div>
                             </div>
 
                             <div className='subscribe-button-container'>
@@ -218,13 +220,13 @@ const BlogDetail=()=>{
                         </div>
                             
                         <div className='like-section'>
-                            <div>
+                            <div className='like-comment'>
                                 <div className='like'>
-                                    <div style={{margin: "auto", cursor:"pointer"}} onClick={handleLike}>
+                                    <div onClick={handleLike}>
                                         {like? <FavoriteIcon style={{color: "red"}}/> : <FavoriteBorderIcon />}
                                     </div>
                                     <p>Like</p>
-                                    <p className='category'>{likeCount}</p>
+                                    <p className='like-count'>{likeCount}</p>
                                 </div>
 
                                 <div className='comment' onClick={showComments}>
@@ -232,7 +234,7 @@ const BlogDetail=()=>{
                                         {commentOpen? <CommentIcon style={{color:"blue"}}/> : <CommentOutlinedIcon />}
                                     </div>
                                     {commentOpen? <p  style={{color:"blue"}}>Comment</p> : <p>Comment</p>}
-                                    <p className='category'>{commentCount}</p>
+                                    <p className='like-count'>{commentCount}</p>
                                 </div>
                             </div>
 
@@ -240,6 +242,7 @@ const BlogDetail=()=>{
                                 <ShareButtons url={window.location.href} title={post.title}/>
                             </div>
                         </div>
+
                     </div>
 
                     {

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState , useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled, alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -52,6 +53,21 @@ export default function Dropdown() {
     const navigate = useNavigate();
     const account = JSON.parse(localStorage.getItem('account'));
 
+    const [isLoggedIn, setIsLoggedIn]=useState(false);
+
+    useEffect(()=>{
+      const checkLogin=()=>{
+        if(account && account.email) 
+        {
+          setIsLoggedIn(true);
+        }
+        else{
+          setIsLoggedIn(false);
+        }
+      }
+      checkLogin();
+    },[account])    
+
     const handleLogout=async()=>{
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
@@ -99,7 +115,7 @@ export default function Dropdown() {
             Profile
         </MenuItem>
         <MenuItem onClick={handleLogout} disableRipple>
-          Logout
+          {isLoggedIn? 'Logout' : 'Login/Signup'}
         </MenuItem>
       </StyledMenu>
     </div>

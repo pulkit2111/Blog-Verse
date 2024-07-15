@@ -3,7 +3,7 @@ import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config';
 import { getAccessToken, getType } from '../utils/common-utils';
 
  const API_URL = 'https://blog-verse-abrx.onrender.com';
-//const API_URL = 'http://localhost:3001';
+ //const API_URL = 'http://localhost:3001';
 
 const axiosInstance = axios.create({
   baseURL: API_URL,

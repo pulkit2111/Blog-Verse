@@ -22,14 +22,14 @@ const Control=()=>{
                     setPosts(response.data);
                 }
             }catch(error){
-                setSuccessMessage('Server has not started yet!');
+                setSuccessMessage('Please Login!');
             }
         }
         fetchData();
     },[category])
 
     return(
-        <>
+        <div style={{position:"relative"}}>
             <div className="search-posts">
                 <Search posts={posts} category={category}/>
             </div>
@@ -50,7 +50,7 @@ const Control=()=>{
                     </div>
                 )}
             </Grid>
-        </>
+        </div>
     )
 }
 
