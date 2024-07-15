@@ -21,7 +21,7 @@ const app=express();
 const react_port = process.env.REACT_PORT;
 
 const corsOptions = {
-    origin: `https://main--bloggverse.netlify.app`,
+    origin: `https://bloggverse.netlify.app/`,
     credentials: true // Allow credentials (cookies)
   };
 
