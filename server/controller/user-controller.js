@@ -82,7 +82,7 @@ export const googleCallback= async(req,res)=>{
     const newToken = new Token({ userId: user._id, token: refreshToken });
     await newToken.save();
     
-    res.redirect(`http://localhost:3000/google-callback?accessToken=${accessToken}&refreshToken=${refreshToken}&email=${user.email}&name=${user.name}&picture=${user.picture}`);
+    res.redirect(`https://bloggverse.netlify.app/google-callback?accessToken=${accessToken}&refreshToken=${refreshToken}&email=${user.email}&name=${user.name}&picture=${user.picture}`);
 }
 
 export const refreshToken=async(req,res)=>{
