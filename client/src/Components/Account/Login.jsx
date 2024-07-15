@@ -119,7 +119,7 @@ const Login=({isUserAuthenticated})=>{
     }
 
         const handleGoogle = () => {
-            window.open('http://localhost:3001/google', '_self');
+            window.open('https://blog-verse-abrx.onrender.com/google', '_self');
                 };
 
     return(
