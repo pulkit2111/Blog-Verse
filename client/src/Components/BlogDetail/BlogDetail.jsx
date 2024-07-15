@@ -162,150 +162,158 @@ const BlogDetail=()=>{
     }
 
     return(
-        <div className='blogdetails'>
-            <Navbar isAuthor={false}/>
+        <div style={{backgroundColor: " rgb(245, 245, 245)"}}>
+            <div className='blogdetails'>
+                <Navbar isAuthor={false}/>
 
-            <div className='blog-details-box'>
-                <div className='blog'>
+                <div className='blog-details-box'>
+                    <div className='blog'>
 
-                    <div>
-                        <ArrowBackIcon />
-                        <Link to={'/'}>
-                            <p className='go-back'>Go back</p>
-                        </Link>
-                    </div>
-
-                    {
-                        post && post.tags && post.tags.map((tag, index) => {
-                            return(<p className='category' key={index}>{tag}</p>)
-                        })
-                    }
-
-                    <h1>{post.title}</h1>
-
-                    <div className='author-details'>
-
-                        <div className='author-profile-pic-container'>
-                            <Link to={`/profile/${authorProfile.email}/${false}`}>
-                                <img className='author-profile-pic' src={authorProfile.picture?authorProfile.picture:"https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"} alt="profile-pic" />
+                        <div>
+                            <ArrowBackIcon />
+                            <Link to={'/'}>
+                                <p className='go-back'>Go back</p>
                             </Link>
                         </div>
 
-                        <div className='blog-author-details'>
-                            <p className='by'>by {post.name}</p>
-                            <p className='blog-date'>{post.createdDate}</p>
-                        </div>
-
-                        <div className='subscribe-button-container'>
                         {
-                            subscribe?(
-                                <Button variant='contained' color="error" onClick={()=>{handleSubscriber()}} style={{textTransform:"none"}}>Unsubscribe</Button>
-                            ):(
-                                <Button variant='contained' color="primary" onClick={()=>{handleSubscriber()}} style={{textTransform:"none"}}>Subscribe</Button>
-                            )
-                        }
-                    </div>
-                    </div>
-                    
-                    <div>
-                        <p>{post.description}</p>
-                    </div>
-                    
-                    <div style={{position:"relative"}}>
-                        <img src={url} alt="blog" className='blog-img'/>
-                        <a href={url} target="_blank" rel="noopener noreferrer" className='blog-img-icon-link'><OpenInFullIcon className='img-icon' /></a>
-                    </div>
-                    
-                    <div className='like-section'>
-                        <div className='like'>
-                            <div style={{margin: "auto", cursor:"pointer"}} onClick={handleLike}>
-                                {like? <FavoriteIcon style={{color: "red"}}/> : <FavoriteBorderIcon />}
-                            </div>
-                            <p>Like</p>
-                            <p className='category'>{likeCount}</p>
-                        </div>
-                        <div className='comment' onClick={showComments}>
-                            <div style={{margin: "auto"}}>
-                                {commentOpen? <CommentIcon style={{color:"blue"}}/> : <CommentOutlinedIcon />}
-                            </div>
-                            {commentOpen? <p  style={{color:"blue"}}>Comment</p> : <p>Comment</p>}
-                            <p className='category'>{commentCount}</p>
-                        </div>
-
-                        <div style={{float:"right"}}>
-                            <ShareButtons url={window.location.href} title={post.title}/>
-                        </div>
-                    </div>
-                </div>
-
-                {
-                    commentOpen?
-                    <div className='comment-box'>
-                        <div className='addAComment'>
-                            <div className='comment-profile-pic'>
-                                <img className='author-profile-pic' src={userProfile.picture?userProfile.picture:profileBg} alt="user-pic" />
-                            </div>
-                            <input type="text" placeholder='Add a comment...' value={comment} onChange={(e)=>{newComment(e)}} />
-                            <SendRoundedIcon className='send-icon-comment' onClick={sendComment}/>
-                        </div>
-                        <div>
-                        {
-                            commentsInfo.map((comment, index)=>{
-                                return(
-                                    <div className='prevComment-box' key={index}>
-                                        <div className='old-comment-profile-pic'>
-                                            <Link to={`/profile/${comment.email}/${false}`}>
-                                                <img className='author-profile-pic' src={comment.picture} alt="user-pic" />
-                                            </Link>
-                                        </div>
-                                        <div style={{maxWidth:"80%"}}>
-                                            <h1 className='old-comment-name'>{comment.name}</h1>
-                                            <p className='old-comment-time'>{formatDistanceToNow(new Date(comment.date), {addSuffix: true})}</p>
-                                            <p className='old-comment-data'>
-                                                {isExpanded? comment.comment : truncateText(comment.comment)}
-                                                {
-                                                    comment.comment.length>100 && (
-                                                        <span className='read-more-link' onClick={handleExpand}>
-                                                            {isExpanded ? '  ...Read Less' : 'Read More'}
-                                                        </span>
-                                                    )
-                                                }
-                                            </p>
-                                        </div>
-                                    </div>
-                                )
+                            post && post.tags && post.tags.map((tag, index) => {
+                                return(<p className='category' key={index}>{tag}</p>)
                             })
                         }
+
+                        <h1>{post.title}</h1>
+
+                        <div className='author-details'>
+
+                            <div className='author-profile-pic-container'>
+                                <Link to={`/profile/${authorProfile.email}/${false}`}>
+                                    <img className='author-profile-pic' src={authorProfile.picture?authorProfile.picture:"https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"} alt="profile-pic" />
+                                </Link>
+                            </div>
+
+                            <div className='blog-author-details'>
+                                <p className='by'>by {post.name}</p>
+                                <p className='blog-date'>{post.createdDate}</p>
+                            </div>
+
+                            <div className='subscribe-button-container'>
+                                {
+                                    subscribe?(
+                                        <Button variant='contained' color="error" onClick={()=>{handleSubscriber()}} style={{textTransform:"none"}}>Unsubscribe</Button>
+                                    ):(
+                                        <Button variant='contained' color="primary" onClick={()=>{handleSubscriber()}} style={{textTransform:"none"}}>Subscribe</Button>
+                                    )
+                                }
+                            </div>
+                        </div>
+                            
+                        <div className='post-description'>
+                            <p>{post.description}</p>
+                        </div>
+                            
+                        <div style={{position:"relative"}}>
+                            <img src={url} alt="blog" className='blog-img'/>
+                            <a href={url} target="_blank" rel="noopener noreferrer" className='blog-img-icon-link'><OpenInFullIcon className='img-icon' /></a>
+                        </div>
+                            
+                        <div className='like-section'>
+                            <div>
+                                <div className='like'>
+                                    <div style={{margin: "auto", cursor:"pointer"}} onClick={handleLike}>
+                                        {like? <FavoriteIcon style={{color: "red"}}/> : <FavoriteBorderIcon />}
+                                    </div>
+                                    <p>Like</p>
+                                    <p className='category'>{likeCount}</p>
+                                </div>
+
+                                <div className='comment' onClick={showComments}>
+                                    <div style={{margin: "auto"}}>
+                                        {commentOpen? <CommentIcon style={{color:"blue"}}/> : <CommentOutlinedIcon />}
+                                    </div>
+                                    {commentOpen? <p  style={{color:"blue"}}>Comment</p> : <p>Comment</p>}
+                                    <p className='category'>{commentCount}</p>
+                                </div>
+                            </div>
+
+                            <div className='share-buttons'>
+                                <ShareButtons url={window.location.href} title={post.title}/>
+                            </div>
                         </div>
                     </div>
-                    :
-                    <div />
-                }
 
-            </div>
-            
-            <div className='relatedReads'>
-                <p className='relatedBlogs-para'>Related Blogs</p>
-                <Grid container spacing={3} columns={4}>
                     {
-                        posts && posts.length>0 ? posts.map((post, index) =>{
-                            return(
-                            <Grid item lg={4} sm={6} xs={12} key={post._id}>
-                                <Post post={post} isAuthor={false}  key={post._id}/>
-                            </Grid>
-                            )
-                        })
-                        : <div>No posts available</div>
+                        commentOpen?
+                        <div className='comment-box'>
+                            <div className='addAComment'>
+                                <div className='comment-profile-pic'>
+                                    <img className='author-profile-pic' src={userProfile.picture?userProfile.picture:profileBg} alt="user-pic" />
+                                </div>
+                                <input type="text" placeholder='Add a comment...' value={comment} onChange={(e)=>{newComment(e)}} />
+                                <SendRoundedIcon className='send-icon-comment' onClick={sendComment}/>
+                            </div>
+                            <div>
+                            {
+                                commentsInfo.map((comment, index)=>{
+                                    return(
+                                        <div className='prevComment-box' key={index}>
+                                            <div className='old-comment-profile-pic'>
+                                                <Link to={`/profile/${comment.email}/${false}`}>
+                                                    <img className='author-profile-pic' src={comment.picture} alt="user-pic" />
+                                                </Link>
+                                            </div>
+                                            <div style={{maxWidth:"80%"}}>
+                                                <h1 className='old-comment-name'>{comment.name}</h1>
+                                                <p className='old-comment-time'>{formatDistanceToNow(new Date(comment.date), {addSuffix: true})}</p>
+                                                <p className='old-comment-data'>
+                                                    {isExpanded? comment.comment : truncateText(comment.comment)}
+                                                    {
+                                                        comment.comment.length>100 && (
+                                                            <span className='read-more-link' onClick={handleExpand}>
+                                                                {isExpanded ? '  ...Read Less' : 'Read More'}
+                                                            </span>
+                                                        )
+                                                    }
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                            </div>
+                        </div>
+                        :
+                        <div />
                     }
-                </Grid>
-            </div>
 
-            {successMessage && (
-                <div className="successMessage">
-                    {successMessage}
                 </div>
-            )}
+                
+                <div className='relatedReads'>
+                    <p className='relatedBlogs-para'>Related Blogs</p>
+                    <Grid container spacing={3} columns={4}>
+                        {
+                            posts && posts.length>0 ? posts.map((post, index) =>{
+                                return(
+                                <Grid item lg={4} sm={6} xs={12} key={post._id}>
+                                    <Post post={post} isAuthor={false}  key={post._id}/>
+                                </Grid>
+                                )
+                            })
+                            : <div>No posts available</div>
+                        }
+                    </Grid>
+                </div>
+                {successMessage && (
+                    <div className="successMessage">
+                        {successMessage}
+                    </div>
+                )}
 
+            </div>
+            <div className="details-footer">
+                    <p>© 2024 Blog Verse. All rights reserved.</p>
+                    <p>Privacy Policy | Terms of Service</p>
+                </div>
         </div>
     );
 }

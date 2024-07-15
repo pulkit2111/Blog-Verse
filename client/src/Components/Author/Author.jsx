@@ -169,7 +169,7 @@ const Author=()=>{
                         />
                     </div>
 
-                    <Button variant='contained' style={{margin: "2vw", height:"3.5vw"}} onClick={()=> createBlog()}>Publish</Button>
+                    <Button variant='contained' className='publish-button' onClick={()=> createBlog()}>Publish</Button>
 
                 </form>
 
@@ -177,6 +177,11 @@ const Author=()=>{
                     <h1>Preview</h1>
                     <Post post={post} isAuthor={false}/>
                 </div>
+            </div>
+
+            <div className="footer">
+                <p>© 2024 Blog Verse. All rights reserved.</p>
+                <p>Privacy Policy | Terms of Service</p>
             </div>
     </div>
     )

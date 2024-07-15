@@ -40,19 +40,17 @@
 
 
 .post-content{
-    padding: 2%;
-    text-align: left;
+    padding: 3%;
     position: relative;
+    text-align: justify;
 }
 
 .post-edit{
-    position: relative;
-    text-align: center;
-    height: 2vw;
-}
-
-.post-author{
-    float: left;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 0;
 }
 
 .changePost{
@@ -61,27 +59,22 @@
     cursor: pointer;
 }
 
-.post-date{
-    float: right;
-}
-
 .post-content h1{
     font-size: 1.5vw;
+    margin: 1%;
 }
 
 .post-name{
-    position: relative;
-}
-
-.detail-link{
-    position: absolute;
-    right: 0;
-    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
 }
 
 .post-content p{
     font-size: 0.8vw;
-    display: inline-block;
+    overflow-wrap: break-word; /* Modern specification */
+    white-space: normal;
 }
 
 .tags p{
@@ -92,7 +85,7 @@
     padding: 2px 4px;
 }
 
-@media screen and (max-width: 700px)
+@media screen and (max-width: 650px)
 {
     .post-image{
         width: 100%; 
@@ -105,21 +98,16 @@
         font-size: 24px; /* Adjust size as necessary */
     }
     
-    
     .post-content{
         padding: 4%;
         text-align: left;
-        position: relative;
     }
     
     .post-edit{
-        position: relative;
-        text-align: center;
-        height: 2vw;
-    }
-    
-    .post-author{
-        float: left;
+        margin: 0;
+        margin-bottom: -10%;
+        font-size: 80%;
+        opacity: 0.8;
     }
     
     .changePost{
@@ -127,39 +115,37 @@
         position: relative;
         cursor: pointer;
     }
-    
-    .post-date{
-        float: right;
-    }
 
     .post-name{
-
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between;
     }
     
     .post-name h1{
-        display: inline-block;
         font-size: 140%;
+        margin: 0;
         margin-top:10%;
     }
     
     .detail-link{
-        position: absolute;
+        position: unset;
         right: 0;
         bottom: 0;
     }
     
     .post-content p{
-        font-size: 120%;
-        display: inline-block;
-        font-weight: 500;
+        font-size: 90%;
     }
     
     .tags p{
         display: inline-block;
-        margin-right: 1vw;
+        margin:1%;
         border: 1px solid rgb(169, 168, 168);
         border-radius: 5px;
         padding: 2px 4px;
+        font-size: 70%;
     }
     
 }

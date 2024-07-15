@@ -69,7 +69,7 @@ export default function Dropdown() {
     <div>
       <Button
         variant="text"
-        style={{textTransform:"none", color:"black"}}
+        style={{textTransform:"none", color:"black", fontSize:"100%", margin:"0", padding:"0"}}
         onClick={handleClicked}
         disableRipple
         endIcon={<KeyboardArrowDownIcon />}

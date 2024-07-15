@@ -116,6 +116,13 @@
     font-size: 1.2em;
 }
 
+@media screen and (max-width: 650px)
+{
+    .successMessage{
+        font-size: 70%;
+    }
+}
+
 .profile-input{
     border: none;
     outline: none;
@@ -178,7 +185,7 @@
     padding-left: 1vw;
 }
 
-@media screen and (max-width:700px)
+@media screen and (max-width:650px)
 {
     
     .profile-box{

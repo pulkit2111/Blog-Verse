@@ -228,6 +228,10 @@ const Profile=()=>{
 
                 </div>
             </div>
+            <div className="footer">
+                <p>© 2024 Blog Verse. All rights reserved.</p>
+                <p>Privacy Policy | Terms of Service</p>
+            </div>
         </div>
     )
 }

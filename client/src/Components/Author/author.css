@@ -12,6 +12,7 @@
     border-radius: 10px;
     color: rgb(46, 46, 46);
     box-shadow: 1px 1px gray;
+    padding-bottom: 2vw;
 }
 
 .author-form h2{
@@ -65,6 +66,12 @@
 .choose-tags{
     width: 100%;
     margin: auto;
+    margin-bottom: 2vw;
+}
+
+.publish-button{
+    margin: 2vw auto;
+    height: 3vw;
 }
 
 .preview{
@@ -72,7 +79,30 @@
     height: 561px;
 }
 
-@media screen and (max-width: 700px)
+.choose-tags .MuiAutocomplete-root {
+    width: 84%;
+    margin: auto;
+  }
+  
+  .choose-tags .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+    flex-wrap: wrap; /* Ensure the tags wrap to the next line */
+    height: auto;
+  }
+  
+  .choose-tags .MuiAutocomplete-tag {
+    margin: 2px; /* Optional: Add some margin between tags */
+  }
+  
+  .choose-tags .MuiAutocomplete-inputRoot {
+    display: flex;
+    align-items: flex-start; /* Ensure the input aligns properly */
+  }
+  
+  .choose-tags .MuiAutocomplete-input {
+    flex-grow: 1; /* Ensure the input takes the remaining space */
+  }
+
+@media screen and (max-width: 650px)
 {
     .author-container {
         display: block;
@@ -83,10 +113,11 @@
     .author-form{
         width: 80%;
         margin: auto;
+        padding-bottom: 4%;
     }
     
     .author-form h2{
-        font-size: 150%;
+        font-size: 130%;
     }
     
     .blog-image{
@@ -101,11 +132,11 @@
         margin: 1vw;
         border: 1px solid rgb(183, 181, 181);
         padding: 1vw;
-        font-size: 120%;
+        font-size: 100%;
     }
     
     .author-textarea{
-        font-size: 110%;
+        font-size: 100%;
     }
     
     
@@ -123,29 +154,38 @@
     #add-image-button{
         height: auto;
         text-wrap:wrap;
-        width: 40%;
+        width: 50%;
+        height: 11vw;
     }
 
     #add-image-label{
-        display: inline;
-        font-size: 90%;
-        margin: 0;
+        visibility: hidden;
+        font-size: 0;
     }
 
     #add-a-photo-icon{
         display: inline;
         margin: 0;
         padding: 0;
+        width: 100%;
+        visibility:visible;
     }
 
     .choose-tags{
         width: 100%;
         margin: auto;
+        margin-bottom: 5%;
     }
+
+    .publish-button{
+        height: 10%;
+        margin: 1vw;
+    }    
     
     .preview{
-        width: 495px;
+        width: 90%;
         height: 561px;
         margin: auto;
+        margin-bottom: 20%;
     }
 }

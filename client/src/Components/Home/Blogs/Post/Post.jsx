@@ -51,7 +51,7 @@ const Post=({post, isAuthor})=>{
 
                 <div className='post-name'>
                     <h1>{post.title}</h1>
-                        <ArrowOutwardIcon className='detail-link' onClick={handleClick(post._id)}/>
+                    <ArrowOutwardIcon className='detail-link' onClick={handleClick(post._id)}/>
                 </div>
 
                 <p>{post.description.length<=100?post.description:post.description.slice(0,100)+'...'}</p>

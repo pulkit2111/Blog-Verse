@@ -1,7 +1,8 @@
 import './navbar.css';
 import React , {useState, useEffect, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { Button} from '@mui/material';
+import { Button, IconButton, MenuItem, Menu} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu'
 import Categories from './Categories.jsx';
 import Profile from './MyProfile.jsx'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -15,6 +16,18 @@ const Navbar=()=>{
     const [notifiOpen, setNotifiOpen] = useState(false);
     const account = useContext(DataContext);
     const [notifs, setNotifs] = useState([]);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [isCategoriesVisible, setIsCategoriesVisible] = useState(false);
+    
+    const handleToggleCategories = (event) => {
+      setAnchorEl(event.currentTarget);
+      setIsCategoriesVisible(false);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+      setIsCategoriesVisible(false);
+    };
 
     //fetch notifications
     useEffect(()=>{
@@ -26,7 +39,6 @@ const Navbar=()=>{
                     setNotifs(response.data.notifs);
                 }
             }catch(error){
-                console.log('Error in fetching notifications.');
             }
         }
         fetchdata();
@@ -68,13 +80,29 @@ const Navbar=()=>{
                 <button className='website-button' onClick={handleClick('/')}>Blog Verse.</button>
             </div>
 
-            <div className='categories' id='categories'>
-                <ul>
-                    <li><Button varient="text" style={{textTransform:"none", color:"black"}} id='middle-button' onClick={handleClick('/')}>Home</Button></li>
-                    <li><Categories/></li>
-                    <li><Button varient="text" style={{textTransform:"none", color:"black"}} id='middle-button' onClick={handleClick('/author')}>Start your Blog</Button></li>
-                </ul>
+            <div className={`categories ${isCategoriesVisible? 'show' : ''}`} id='categories'>
+                <Button varient="text" style={{textTransform:"none", color:"black"}} id='middle-button' onClick={handleClick('/')}>Home</Button>
+                <Categories/>
+                <Button varient="text" style={{textTransform:"none", color:"black"}} id='middle-button' onClick={handleClick('/author')}>Start your Blog</Button>
             </div>   
+
+            <div className='hamburger'>
+                <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleToggleCategories}>
+                  <MenuIcon />
+                </IconButton>
+            </div>
+
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={handleClick('/')}>Home</MenuItem>
+                <MenuItem><Categories /></MenuItem>
+                <MenuItem onClick={handleClick('/author')}>Start your Blog</MenuItem>
+            </Menu>
 
             <div className='navbar-right'>
                 <div className='notifications'>
