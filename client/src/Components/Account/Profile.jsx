@@ -205,7 +205,7 @@ const Profile=()=>{
                                         </Grid>
                                         )
                                     })
-                                    : <div>No posts available</div>
+                                    : <p style={{marginLeft:"3%"}}>No posts available</p>
                                 }
                                 </Grid>
 
@@ -219,7 +219,7 @@ const Profile=()=>{
                                             </Grid>
                                             )
                                         })
-                                        : <div>No posts available</div>
+                                        : <p style={{marginLeft:"3%"}}>No posts available</p>
                                     }
                                 </Grid>
                             )
