@@ -1,0 +1,20 @@
+.share-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .share-button {
+    margin: 0;
+    width: 30px; /* Default size for small screens */
+    height: 30px; /* Default size for small screens */
+  }
+  
+  @media (max-width: 650px) {
+    .share-button {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  

@@ -85,18 +85,27 @@
   .remember-me{
     margin: 1vw auto;
     transform: scale(1.2);
-    width: 80%;
+    width: 83%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items:flex-start;
+    align-items:center;
+  }
+
+  .remember-me-left{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:center;
   }
 
   .remember-me h1{
+    font-size: 70%;
     text-align: left;
   }
   
   .login-left-container {
+    padding: 0 10vw;
     flex: 1;
     justify-content: center;
     align-items: center;
@@ -119,7 +128,7 @@
     opacity: 0.7;
   }
 
-  @media screen and (max-width: 700px)
+  @media screen and (max-width: 650px)
   { 
     .logo-container{
       width: 50%;
@@ -127,11 +136,11 @@
     }
 
     .please-enter-details{
-      font-size: 110%;
+      font-size: 100%;
     }
 
     .loginThrough-container{
-      width: 50%;
+      width: 40%;
       transform: scale(2.5);
       margin: 15% auto;
     }
@@ -164,19 +173,16 @@
       }
       
       .login-container{
-        display: flex;
+        display: block;
         margin: 0;
-        padding: 0;
+        padding: 10% 5%;
         height: 100%;
-        background-color: #BAB5AE;
+        background-color: rgb(239, 238, 237);
       }
       
       .login-image-container {
-        flex: 1;
-        width: 100%; /* Adjust as needed */
-        height: 100vh; /* Adjust as needed, e.g., 50vh for half screen height */
-        overflow: hidden; /* Hide the overflow */
-        position: relative;
+        visibility: hidden;
+        display: none;
       }
       
       .login-image-container img {
@@ -186,22 +192,30 @@
       }
 
       .remember-me{
-        justify-content: left;
+        margin: 2vw auto;
+        transform: scale(1.2);
+        width: 85%;
+      }
+    
+      .remember-me-left{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items:center;
+      }
+    
+      .remember-me h1{
+        font-size: 70%;
       }
       
       .login-left-container {
-        flex: 1;
-        justify-content: center;
-        align-items: center;
+        display: block;
         background-color: rgb(239, 238, 237);
       }
       
       .sign-in{
-        height: 5vw;
-        font-size: 110%;
-      }
-      
-      .sign-in:hover{
-        opacity: 0.7;
+        height: 10vw;
+        margin: 2% 0;
+        font-size: 100%;
       }
   }

@@ -126,7 +126,7 @@ const Login=({isUserAuthenticated})=>{
         <div className="login-container">
         { account==='login'?
         //  login
-            <div className="login-left-container" style={{padding: "0  10vw"}}>
+            <div className="login-left-container">
                 <div>
                     <div className='logo-container'>
                         <img src={Logo} alt="logo" className='logo'/>
@@ -169,11 +169,11 @@ const Login=({isUserAuthenticated})=>{
                     </div>
 
                     <div className='remember-me'>
-                        <div>
-                            <Checkbox style={{float:"left"}}/>
-                            <h1 style={{display:"inline-block", fontSize: "small"}}>Remember <br /> Me</h1>
+                        <div className='remember-me-left'>
+                            <Checkbox style={{marginRight:"1vw",padding:"0"}}/>
+                            <h1>Remember Me</h1>
                         </div>
-                        <h1 style={{display:"inline-block", fontSize: "small", cursor:"pointer"}} onClick={()=>toggleSignup()}>Forgot <br /> Password?</h1>
+                        <h1 onClick={()=>toggleSignup()}>Forgot Password?</h1>
                     </div>
 
                     <button className="sign-in" onClick={()=>loginUser()}>Log In</button>
@@ -229,10 +229,11 @@ const Login=({isUserAuthenticated})=>{
                     </div>
                 </form>
 
-                    <div className='remember-me'>
+                    <div>
                         <Checkbox style={{float:"left"}}/>
                         <h1 style={{display:"inline-block", fontSize: "small", float:"left"}}>Remember Me</h1>
                     </div>
+
                     <button className="sign-in" onClick={()=>signupUser()}>Sign Up</button>
 
                     <button className="sign-in" style={{backgroundColor:"green"}} onClick={()=>toggleSignup()}>Already Have An Account?</button>

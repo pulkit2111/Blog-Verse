@@ -2,8 +2,8 @@ import axios from 'axios';
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config';
 import { getAccessToken, getType } from '../utils/common-utils';
 
- const API_URL = 'https://blog-verse-abrx.onrender.com';
- //const API_URL = 'http://localhost:3001';
+ //const API_URL = 'https://blog-verse-abrx.onrender.com';
+ const API_URL = 'http://localhost:3001';
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
@@ -72,8 +72,8 @@ axiosInstance.interceptors.response.use(
     if(error.response.status === 403 && !originalRequest._retry){
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem('refreshToken');
-      const accessToken = await axios.post('https://blog-verse-abrx.onrender.com/refresh-token', {refreshToken});
-      // const accessToken = await axios.post('http://localhost:3001/refresh-token', {refreshToken});
+      //const accessToken = await axios.post('https://blog-verse-abrx.onrender.com/refresh-token', {refreshToken});
+      const accessToken = await axios.post('http://localhost:3001/refresh-token', {refreshToken});
       if(accessToken){
         localStorage.setItem('accessToken', accessToken.data.newAccessToken);
         axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken.data.newAccessToken}`;

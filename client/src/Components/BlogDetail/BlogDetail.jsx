@@ -162,17 +162,16 @@ const BlogDetail=()=>{
     }
 
     return(
-        <div style={{backgroundColor: " rgb(245, 245, 245)"}}>
+        <div style={{backgroundColor: "white"}}>
+            <Navbar isAuthor={false}/>
             <div className='blogdetails'>
-                <Navbar isAuthor={false}/>
 
                 <div className='blog-details-box'>
                     <div className='blog'>
 
                         <div>
-                            <ArrowBackIcon />
-                            <Link to={'/'}>
-                                <p className='go-back'>Go back</p>
+                            <Link to={'/'} style={{color:"black"}}>
+                                <ArrowBackIcon />
                             </Link>
                         </div>
 
@@ -202,9 +201,9 @@ const BlogDetail=()=>{
                             <div className='subscribe-button-container'>
                                 {
                                     subscribe?(
-                                        <Button variant='contained' color="error" onClick={()=>{handleSubscriber()}} style={{textTransform:"none"}}>Unsubscribe</Button>
+                                        <Button variant='contained' color="error" onClick={()=>{handleSubscriber()}} id='subscribe-button'>Unsubscribe</Button>
                                     ):(
-                                        <Button variant='contained' color="primary" onClick={()=>{handleSubscriber()}} style={{textTransform:"none"}}>Subscribe</Button>
+                                        <Button variant='contained' color="primary" onClick={()=>{handleSubscriber()}} id='subscribe-button'>Subscribe</Button>
                                     )
                                 }
                             </div>
@@ -238,8 +237,8 @@ const BlogDetail=()=>{
                                 </div>
                             </div>
 
-                            <div className='share-buttons'>
-                                <ShareButtons url={window.location.href} title={post.title}/>
+                            <div>
+                                <ShareButtons url={window.location.href} title={post.title} />
                             </div>
                         </div>
 
@@ -302,7 +301,7 @@ const BlogDetail=()=>{
                                 </Grid>
                                 )
                             })
-                            : <div>No posts available</div>
+                            : <div></div>
                         }
                     </Grid>
                 </div>
