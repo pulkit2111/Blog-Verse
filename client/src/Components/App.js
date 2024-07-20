@@ -13,7 +13,7 @@ import Profile from "./Account/Profile.jsx";
 //for global data sharing between components
 import DataProvider from "../context/DataProvider";
 
-const PrivateRoute = ({isAuthenticated, ...props}) =>{
+const PrivateRoute = ({isAuthenticated}) =>{
     return isAuthenticated?
     <>
          <Outlet /> {/* outlet means child component will be executed  */}

@@ -16,7 +16,6 @@ export const authenticateToken= async(req,res,next)=>{ //next comes only in midd
     const secretKey = process.env.ACCESS_SECRET_KEY;
     try {
         const decodedToken = jwt.verify(token, secretKey);
-        console.log('decodedToken: ', decodedToken);
         req.user = await User.findById(decodedToken._id);
         next();
     } catch (error) {

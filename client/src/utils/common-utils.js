@@ -42,8 +42,11 @@ const GoogleCallback=({isUserAuthenticated})=>{
             isUserAuthenticated(true);
             navigate('/');
         }
+        else{
+            isUserAuthenticated(false);
+            navigate('/login');
+        }
     }, [query, setAccount, navigate, isUserAuthenticated]);
-
     return null;
 }
 

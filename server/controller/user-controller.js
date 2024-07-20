@@ -51,8 +51,6 @@ export const signupUser = async (req, res) => {
     }
 };
 
-
-
 export const loginUser= async(req,res)=>{
     const user=req.user;
 
@@ -66,7 +64,6 @@ export const loginUser= async(req,res)=>{
 }
 
 export const logout= async(req,res)=>{
-    console.log('req: ',req.user);
     try{
         const userId=req.user._id;
         await Token.deleteMany({userId: userId});

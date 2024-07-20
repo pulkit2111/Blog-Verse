@@ -51,10 +51,6 @@ app.use(passport.session());
 
 app.use('/',Router);
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-// });
-
 const port = process.env.PORT;
 
 app.listen(port, ()=>console.log(`Server is running at port ${port}`));
