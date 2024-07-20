@@ -84,7 +84,7 @@
 .edit{
     cursor: pointer;
     position: absolute;
-    top: 5%;
+    top: 10%;
     right: 1vw;
 }
 
@@ -290,7 +290,7 @@
     
     .edit{
         cursor: pointer;
-        top: 3%;
+        top: 10%;
         right: -4%;
         transform: scale(0.7);
     }
