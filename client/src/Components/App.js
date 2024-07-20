@@ -43,7 +43,7 @@ function App(){
 
                         <Route path="/profile//:isMine" element={<Login isUserAuthenticated={isUserAuthenticated} />} />
 
-                        <Route path="/google-callback" element={<GoogleCallback />} />
+                        <Route path="/google-callback" element={<GoogleCallback isUserAuthenticated={isUserAuthenticated}/>} />
 
                     </Routes>
                 </BrowserRouter>

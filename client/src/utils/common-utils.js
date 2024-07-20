@@ -24,7 +24,7 @@ const useQuery=()=>{
     return new URLSearchParams(useLocation().search);
 }
 
-const GoogleCallback=()=>{
+const GoogleCallback=({isUserAuthenticated})=>{
     const query=useQuery();
     const navigate = useNavigate();
     const {setAccount}=useContext(DataContext);
@@ -39,9 +39,10 @@ const GoogleCallback=()=>{
             localStorage.setItem('refreshToken', refreshToken);
             setAccount({email,name,picture});
             // Redirect to the desired page
+            isUserAuthenticated(true);
             navigate('/');
         }
-    }, [query, setAccount, navigate]);
+    }, [query, setAccount, navigate, isUserAuthenticated]);
 
     return null;
 }
