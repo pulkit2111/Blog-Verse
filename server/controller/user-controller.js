@@ -66,8 +66,10 @@ export const loginUser= async(req,res)=>{
 }
 
 export const logout= async(req,res)=>{
+    console.log('req: ',req.user);
     try{
-        await Token.deleteMany({});
+        const userId=req.user._id;
+        await Token.deleteMany({userId: userId});
         res.status(200).json({msg:'Tokens deleted successfully.'});
     }catch(error){
         res.status(500).json({msg: 'error logging out'});

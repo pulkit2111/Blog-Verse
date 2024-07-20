@@ -69,10 +69,10 @@ export default function Dropdown() {
     },[account])    
 
     const handleLogout=async()=>{
+        await API.logoutUser();
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('account');
-        API.logoutUser();
         navigate('/login');
     }
 

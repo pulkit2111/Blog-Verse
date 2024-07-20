@@ -31,8 +31,8 @@ export const SERVICE_URLS={
     sendNotif:{url: '/sendNotif', method: 'POST'},
 
     googleLogin:{url:'/google',method:'GET'},
-    getAllPosts:{url:'/getPosts', method:'GET',params:true},
-    getPostById: {url: '/postById', method:'GET', query:true},
+    getAllPosts:{url:'/getAllPosts', method:'GET',params:true},
+    getPostById: {url: '/getPostById', method:'GET', query:true},
     getProfile:{url:'/profile', method:'GET',query:true},
     getUserPosts: {url:'/userPosts', method:'GET', query:true},
     getSubscribers:{url:'/getSubscribers', method:'GET', query:true},

@@ -2,7 +2,7 @@ import './blogDetails.css';
 import Navbar from '../Home/Navbar/Navbar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate} from 'react-router-dom';
 import { useEffect, useState, useContext} from 'react';
 import {API} from '../../service/api.js';
 import { Link} from 'react-router-dom';
@@ -17,10 +17,12 @@ import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import {formatDistanceToNow} from 'date-fns';
 import profileBg from '../../Images/profile.png'
 import { ShareButtons } from './ShareButtons.jsx';
+import LoginModal from '../Modal/LoginModal.jsx';
 
 const BlogDetail=()=>{
     const account=useContext(DataContext);
     const {id} = useParams();
+    const navigate = useNavigate();
 
     const [post, setPost] = useState({}); //this post
     const [posts,setPosts] = useState([]); //related posts
@@ -38,6 +40,7 @@ const BlogDetail=()=>{
     const [commentsInfo, setCommentsInfo] = useState([]);
     const [comment, setComment]=useState('');
     const [isExpanded, setIsExpanded] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const url= post.picture?post.picture:"https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg"
 
@@ -47,9 +50,12 @@ const BlogDetail=()=>{
             try{
                 let response = await API.getPostById(id);
                 let response4=await API.getRelatedPosts(id);
-                let userProfile = await API.getProfile(account.account.email);
-                if(userProfile.isSuccess){
-                    setUserProfile(userProfile.data);
+                if(account && account.account.email) 
+                {
+                    let userProfile = await API.getProfile(account.account.email);
+                    if(userProfile.isSuccess){
+                        setUserProfile(userProfile.data);
+                    }
                 }
                 if(response.isSuccess)
                 {
@@ -62,12 +68,16 @@ const BlogDetail=()=>{
                     const isLiked = fetchedPost.likes && fetchedPost.likes.includes(account.account.email); 
                     setLike(isLiked);
                     let response2= await API.getProfile(fetchedPost.email);
-                    let response3=await API.getSubscribers(fetchedPost.email);
+                    let response3;
+                    if(account && account.account.email)
+                    {
+                        response3=await API.getSubscribers(fetchedPost.email);
+                    }
                     if(response2.isSuccess)
                     {
                         setAuthorProfile(response2.data);
                     }
-                    if(response3.isSuccess)
+                    if(account && account.account.email && response3.isSuccess)
                     {
                         const isSubscribed = response3.data.some(subscriber => subscriber=== account.account.email);
                         if(isSubscribed) setSubscribe(true);
@@ -87,43 +97,63 @@ const BlogDetail=()=>{
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[id])
 
+    //login in case user has not logged in
+    const handleLogin=()=>{
+        setShowModal(false);
+        navigate('/login');
+    }
+
+    const handleClose=()=>setShowModal(false);
+
     //subscribe
     const handleSubscriber=async()=>{
-        try {
-            let response = await API.subscribe([authorProfile.email, account.account.email]);
-        
-            if (response.isSuccess) {
-              setSuccessMessage(`You have successfully subscribed to ${authorProfile.name}`);
-              setSubscribe(true);
-            } 
-            else if(response.code===401){
-                setSuccessMessage(`You have successfully unsubscribed to ${authorProfile.name}`);
-                setSubscribe(false);
-            }
-            else if(response.code===420){
-                setSuccessMessage('You can not subscribe to yourself');
-            }
-          } catch (error) {
-            setSuccessMessage('Error subscribing');
-          } finally {
-            setTimeout(() => setSuccessMessage(""), 3000);
-          }
+        if(userProfile.email)
+        {
+            try {
+                let response = await API.subscribe([authorProfile.email, account.account.email]);
+            
+                if (response.isSuccess) {
+                  setSuccessMessage(`You have successfully subscribed to ${authorProfile.name}`);
+                  setSubscribe(true);
+                } 
+                else if(response.code===401){
+                    setSuccessMessage(`You have successfully unsubscribed to ${authorProfile.name}`);
+                    setSubscribe(false);
+                }
+                else if(response.code===420){
+                    setSuccessMessage('You can not subscribe to yourself');
+                }
+              } catch (error) {
+                setSuccessMessage('Error subscribing');
+              } finally {
+                setTimeout(() => setSuccessMessage(""), 3000);
+              }
+        }
+        else{
+            setShowModal(true);
+        }
     }
 
     //like
     const handleLike= async()=>{
-        try{
-            const response = await API.like([account.account.email , id]);
-            if(response.isSuccess){
-                setLike(true);
-                setLikeCount(likeCount+1);
-            }else if(response.code===401){
-                setLike(false);
-                setLikeCount(likeCount-1);
+        if(userProfile.email)
+        {
+            try{
+                const response = await API.like([account.account.email , id]);
+                if(response.isSuccess){
+                    setLike(true);
+                    setLikeCount(likeCount+1);
+                }else if(response.code===401){
+                    setLike(false);
+                    setLikeCount(likeCount-1);
+                }
+            }catch(error){
+                setSuccessMessage('Server has not started!');
+                setTimeout(() => setSuccessMessage(""), 3000);
             }
-        }catch(error){
-            setSuccessMessage('Server has not started!');
-            setTimeout(() => setSuccessMessage(""), 3000);
+        }
+        else{
+            setShowModal(1);
         }
     }
 
@@ -138,17 +168,23 @@ const BlogDetail=()=>{
 
     const sendComment=async()=>{
         if(!comment) return;
-        try{
-            const response=await API.putComment([comment, userProfile.email, userProfile.name,userProfile.picture,id]);
-            if(response.isSuccess){
-                const name = userProfile.name, picture=userProfile.picture, date=new Date();
-                const newcomment = {picture, name, comment, date};
-                setCommentsInfo([...commentsInfo, newcomment]);
-                setComment('');
-            }   
-        }catch(error){
-            setSuccessMessage('Comment could not be added');
-            setTimeout(() => setSuccessMessage(""), 3000);
+        if(userProfile.email)
+        {
+            try{
+                const response=await API.putComment([comment, userProfile.email, userProfile.name,userProfile.picture,id]);
+                if(response.isSuccess){
+                    const name = userProfile.name, picture=userProfile.picture, date=new Date();
+                    const newcomment = {picture, name, comment, date};
+                    setCommentsInfo([...commentsInfo, newcomment]);
+                    setComment('');
+                }   
+            }catch(error){
+                setSuccessMessage('Comment could not be added');
+                setTimeout(() => setSuccessMessage(""), 3000);
+            }
+        }
+        else{
+            setShowModal(true);
         }
     }
 
@@ -310,6 +346,8 @@ const BlogDetail=()=>{
                         {successMessage}
                     </div>
                 )}
+
+                <LoginModal show={showModal} handleClose={handleClose} handleLogin={handleLogin} />
 
             </div>
             <div className="details-footer">

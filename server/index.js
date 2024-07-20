@@ -40,7 +40,7 @@ connectToDatabase().then(() => {
       collectionName: 'sessions',
     }),
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      maxAge: 10000 * 60 * 60 * 24, // 10 days
       secure: process.env.NODE_ENV === 'production', // Secure cookie in production
       sameSite: 'lax', // Adjust based on your requirements
     },

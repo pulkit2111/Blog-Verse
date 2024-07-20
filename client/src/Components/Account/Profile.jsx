@@ -150,11 +150,11 @@ const Profile=()=>{
                         <p className="about">About: </p>
                         {
                         isMine==='true'?(
-                            <p style={{cursor:"pointer", width:"100%"}} >
+                            <p className="about-content" style={{cursor:"pointer"}}>
                                 <EditableField value={profile.about} onSave={(value)=>handleupdate('about',value)} />
                             </p>
                         ):(
-                            <p >{profile.about}</p>
+                            <p className="about-content">{profile.about}</p>
                         )
                         }
                     </div>

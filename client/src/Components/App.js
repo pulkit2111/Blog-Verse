@@ -22,7 +22,7 @@ const PrivateRoute = ({isAuthenticated, ...props}) =>{
 }
 
 function App(){
-    const [isAuthenticated, isUserAuthenticated] = useState(true);
+    const [isAuthenticated, isUserAuthenticated] = useState(false);
     return (
         <div> 
             <DataProvider>
@@ -31,21 +31,17 @@ function App(){
 
                         <Route path='/login' element={<Login isUserAuthenticated={isUserAuthenticated} />} />
                         
-                        <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
-                            <Route path='/' element={ <Home/>} />
-                        </Route>
+                        <Route path='/' element={ <Home/>} />
 
                         <Route path="/author" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
                             <Route path='/author' element={ <Author/>} />
                         </Route>   
 
-                        <Route path="/details/:id" element={<PrivateRoute isAuthenticated={isAuthenticated} />}> 
-                            <Route path="/details/:id" element={<BlogDetail />}/>
-                        </Route>
+                        <Route path="/details/:id" element={<BlogDetail />}/>
 
-                        <Route path="/profile/:email/:isMine" element={<PrivateRoute isAuthenticated={isAuthenticated} />}> 
-                            <Route index element={<Profile />}/>
-                        </Route>
+                        <Route path="/profile/:email/:isMine" element={<Profile />} />
+
+                        <Route path="/profile//:isMine" element={<Login isUserAuthenticated={isUserAuthenticated} />} />
 
                         <Route path="/google-callback" element={<GoogleCallback />} />
 

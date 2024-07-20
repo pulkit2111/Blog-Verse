@@ -127,10 +127,11 @@
 .profile-input{
     border: none;
     outline: none;
-    font-weight: 700;
     font-size: inherit;
     font-style: inherit;
     text-align: center;
+    background-color: transparent;
+    width: 80%;
 }
 
 .about-profile{
@@ -139,13 +140,18 @@
     margin: 1vw auto 2vw;
     border-radius: 20px;
     padding: 0 1.5vw;
-    text-align: left;
 }
 
-
 .about{
-    float: left;
-    margin-right: 1vw;
+    display: inline-block;
+    width: 20%;
+}
+
+.about-content{
+    display: inline-block;
+    width: 80%;
+    text-align: left;
+    background-color: transparent;
 }
 
 .subscribers{
