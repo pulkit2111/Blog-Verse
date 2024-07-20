@@ -23,14 +23,14 @@ const PrivateRoute = ({isAuthenticated}) =>{
 
 function App(){
     const [isAuthenticated, setAuthenticated] = useState(()=>{
-        return localStorage.getItem('isAuthenticated')===true;
+        return localStorage.getItem('isAuthenticated').isAuthenticated===true;
     });
 
     const isUserAuthenticated = (authState) =>{
         setAuthenticated(authState);
         localStorage.setItem('isAuthenticated', authState);
     }
-    
+
     return (
         <div> 
             <DataProvider>
